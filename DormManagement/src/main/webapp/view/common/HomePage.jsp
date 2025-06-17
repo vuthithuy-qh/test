@@ -8,7 +8,7 @@
 <body>
     <div class="header">
         <a href="${pageContext.request.contextPath}/register.jsp" class="nav-link">Đăng Ký</a>
-        <a href="${pageContext.request.contextPath}/login.jsp" class="nav-link">Đăng Nhập</a>
+        <a href="${pageContext.request.contextPath}/view/common/login.jsp" class="nav-link">Đăng Nhập</a>
     </div>
     <div class="content">
         <div class="text-overlay">

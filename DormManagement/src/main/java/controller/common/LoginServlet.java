@@ -6,76 +6,74 @@
 package controller.common;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import model.dao.AdminDAO;
+import model.dao.StudentDAO;
+import model.entity.Admin;
+import model.entity.Students;
 
 /**
  *
  * @author HP
  */
 public class LoginServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    } 
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+    private final AdminDAO adminDAO = new AdminDAO();
+    private final StudentDAO studentDAO = new StudentDAO();
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {
+        String emailOrUsername = request.getParameter("emailOrUsername");
+        String password = request.getParameter("password");
+
+        // Kiểm tra đầu vào cơ bản
+        if (emailOrUsername == null || emailOrUsername.trim().isEmpty() ||
+            password == null || password.trim().isEmpty()) {
+            request.setAttribute("error", "Email/Username và mật khẩu là bắt buộc.");
+            request.getRequestDispatcher("/view/common/login.jsp").forward(request, response);
+            return;
+        }
+
+        request.setAttribute("emailOrUsername", emailOrUsername);
+        request.setAttribute("password", password);
+
+        try {
+            // Kiểm tra admin
+            Admin admin = adminDAO.findAdminByEmailOrUsername(emailOrUsername);
+            if (admin != null) {
+                request.getRequestDispatcher("/AdminController").forward(request, response);
+                return;
+            }
+
+            // Kiểm tra student
+            Students student = studentDAO.findStudentByEmailOrUsername(emailOrUsername);
+            if (student != null) {
+                request.getRequestDispatcher("/UserLoginController").forward(request, response);
+                return;
+            }
+
+            // Nếu không tìm thấy
+            request.setAttribute("error", "Tên đăng nhập hoặc email không tồn tại.");
+            request.getRequestDispatcher("/views/common/login.jsp").forward(request, response);
+        } catch (SQLException e) {
+            request.setAttribute("error", "Lỗi hệ thống: " + e.getMessage());
+            request.getRequestDispatcher("/view/common/login.jsp").forward(request, response);
+        }
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/view/common/login.jsp").forward(request, response);
+    }
+
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Chuyển hướng yêu cầu đăng nhập đến UserLoginController và AdminController";
+    }
 }

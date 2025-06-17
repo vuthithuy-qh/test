@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import model.entity.Admins;
+import model.entity.Admin;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class AdminDAO {
@@ -12,7 +12,7 @@ public class AdminDAO {
     private final DBContext dbContext;
 
     public AdminDAO() {
-        this.dbContext = DBContext.getInstance();
+        this.dbContext = DBContext.getInstance(); // Giả định DBContext đã được singleton
     }
 
     /**
@@ -43,17 +43,14 @@ public class AdminDAO {
         if (username == null || plainPassword == null) {
             throw new IllegalArgumentException("Username và password không được null.");
         }
-        String sql = "INSERT INTO Admin (Username, APassword, FullName, Email, PhoneNumber, ImageProfile) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Admin (Username, [Password], FullName, Email, CreatedAt, UpdatedAt) VALUES (?, ?, ?, ?, GETDATE(), GETDATE())";
         try (Connection conn = dbContext.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             String hashedPassword = BCrypt.hashpw(plainPassword, BCrypt.gensalt());
-
             stmt.setString(1, username);
             stmt.setString(2, hashedPassword);
             stmt.setString(3, "Admin Mặc Định");
             stmt.setString(4, username + "@example.com");
-            stmt.setString(5, "0900000000");
-            stmt.setString(6, null);
 
             int rowsAffected = stmt.executeUpdate();
             System.out.println("AdminDAO: Đã tạo admin mặc định, rows affected: " + rowsAffected);
@@ -70,7 +67,7 @@ public class AdminDAO {
     /**
      * Tìm admin dựa trên email hoặc username
      */
-    public Admins findAdminByEmailOrUsername(String emailOrUsername) throws SQLException {
+    public Admin findAdminByEmailOrUsername(String emailOrUsername) throws SQLException {
         if (emailOrUsername == null) {
             throw new IllegalArgumentException("Email hoặc username không được null.");
         }
@@ -81,14 +78,14 @@ public class AdminDAO {
             stmt.setString(2, emailOrUsername);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Admins admin = new Admins();
-                    admin.setAdminID(rs.getInt("AdminID"));
+                    Admin admin = new Admin();
+                    admin.setAdminId(rs.getInt("AdminID"));
                     admin.setUsername(rs.getString("Username"));
-                    admin.setaPassword(rs.getString("APassword"));
-                    admin.setFullName(rs.getString("FullName"));
+                    admin.setPassword(rs.getString("Password")); // Sử dụng [Password] thay vì APassword
                     admin.setEmail(rs.getString("Email"));
-                    admin.setPhoneNumber(rs.getString("PhoneNumber"));
-                    admin.setImageProfile(rs.getString("ImageProfile"));
+                    admin.setFullName(rs.getString("FullName"));
+                    admin.setCreatedAt(rs.getDate("CreatedAt"));
+                    admin.setUpdatedAt(rs.getDate("UpdatedAt"));
                     System.out.println("AdminDAO: Tìm thấy admin: " + admin.getUsername());
                     return admin;
                 }
@@ -104,31 +101,29 @@ public class AdminDAO {
     /**
      * Tạo tài khoản admin mới
      */
-    public int createAdmin(Admins admin) throws SQLException {
-        if (admin == null || admin.getUsername() == null || admin.getAPassword() == null) {
+    public int createAdmin(Admin admin) throws SQLException {
+        if (admin == null || admin.getUsername() == null || admin.getPassword() == null) {
             throw new IllegalArgumentException("Admin, username hoặc password không được null.");
         }
-        String sql = "INSERT INTO Admin (Username, APassword, FullName, Email, PhoneNumber, ImageProfile) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Admin (Username, [Password], FullName, Email, CreatedAt, UpdatedAt) VALUES (?, ?, ?, ?, GETDATE(), GETDATE())";
         try (Connection conn = dbContext.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            String password = admin.getAPassword();
+            String password = admin.getPassword();
             if (password != null && !password.startsWith("$2a$") && !password.startsWith("$2b$")) {
                 password = BCrypt.hashpw(password, BCrypt.gensalt());
             }
-            admin.setaPassword(password);
+            admin.setPassword(password);
 
             stmt.setString(1, admin.getUsername());
-            stmt.setString(2, admin.getAPassword());
+            stmt.setString(2, admin.getPassword());
             stmt.setString(3, admin.getFullName());
             stmt.setString(4, admin.getEmail());
-            stmt.setString(5, admin.getPhoneNumber());
-            stmt.setString(6, admin.getImageProfile());
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        admin.setAdminID(rs.getInt(1));
+                        admin.setAdminId(rs.getInt(1));
                         System.out.println("AdminDAO: Đã tạo admin mới, ID: " + rs.getInt(1));
                         return rs.getInt(1);
                     }
@@ -146,25 +141,23 @@ public class AdminDAO {
     /**
      * Cập nhật thông tin admin
      */
-    public void updateAdmin(Admins admin) throws SQLException {
-        if (admin == null || admin.getAdminID() <= 0) {
+    public void updateAdmin(Admin admin) throws SQLException {
+        if (admin == null || admin.getAdminId() <= 0) {
             throw new IllegalArgumentException("Admin hoặc adminID không hợp lệ.");
         }
-        String sql = "UPDATE Admin SET Username = ?, APassword = ?, FullName = ?, Email = ?, PhoneNumber = ?, ImageProfile = ? WHERE AdminID = ?";
+        String sql = "UPDATE Admin SET Username = ?, [Password] = ?, FullName = ?, Email = ?, UpdatedAt = GETDATE() WHERE AdminID = ?";
         try (Connection conn = dbContext.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, admin.getUsername());
-            String password = admin.getAPassword();
+            String password = admin.getPassword();
             if (password != null && !password.startsWith("$2a$") && !password.startsWith("$2b$")) {
                 password = BCrypt.hashpw(password, BCrypt.gensalt());
             }
-            admin.setaPassword(password);
-            stmt.setString(2, admin.getAPassword());
+            admin.setPassword(password);
+            stmt.setString(2, admin.getPassword());
             stmt.setString(3, admin.getFullName());
             stmt.setString(4, admin.getEmail());
-            stmt.setString(5, admin.getPhoneNumber());
-            stmt.setString(6, admin.getImageProfile());
-            stmt.setInt(7, admin.getAdminID());
+            stmt.setInt(5, admin.getAdminId());
 
             int rows = stmt.executeUpdate();
             if (rows == 0) {
@@ -180,24 +173,24 @@ public class AdminDAO {
     /**
      * Lấy thông tin admin theo ID
      */
-    public Admins getAdminById(int adminID) throws SQLException {
-        if (adminID <= 0) {
+    public Admin getAdminById(int adminId) throws SQLException {
+        if (adminId <= 0) {
             throw new IllegalArgumentException("adminID không hợp lệ.");
         }
         String sql = "SELECT * FROM Admin WHERE AdminID = ?";
         try (Connection conn = dbContext.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, adminID);
+            stmt.setInt(1, adminId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Admins admin = new Admins();
-                    admin.setAdminID(rs.getInt("AdminID"));
+                    Admin admin = new Admin();
+                    admin.setAdminId(rs.getInt("AdminID"));
                     admin.setUsername(rs.getString("Username"));
-                    admin.setaPassword(rs.getString("APassword"));
-                    admin.setFullName(rs.getString("FullName"));
+                    admin.setPassword(rs.getString("Password")); // Sử dụng [Password]
                     admin.setEmail(rs.getString("Email"));
-                    admin.setPhoneNumber(rs.getString("PhoneNumber"));
-                    admin.setImageProfile(rs.getString("ImageProfile"));
+                    admin.setFullName(rs.getString("FullName"));
+                    admin.setCreatedAt(rs.getDate("CreatedAt"));
+                    admin.setUpdatedAt(rs.getDate("UpdatedAt"));
                     return admin;
                 }
             }
