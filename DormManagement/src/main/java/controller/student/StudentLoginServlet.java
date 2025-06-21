@@ -6,76 +6,77 @@
 package controller.student;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.dao.StudentDAO;
+import model.entity.Students;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
  * @author HP
  */
+@WebServlet(name="StudentLoginServlet", urlPatterns={"/StudentLoginServlet"})
 public class StudentLoginServlet extends HttpServlet {
+    private StudentDAO studentDAO;
+    
+    @Override
+    public void init() throws ServletException {
+        studentDAO = new StudentDAO();
+    }
    
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet StudentLoginServlet</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet StudentLoginServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    } 
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+        // Chuyển hướng đến trang đăng nhập
+        request.getRequestDispatcher("/view/common/login.jsp").forward(request, response);
+    }
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        
+        if (username == null || username.trim().isEmpty() ||
+            password == null || password.trim().isEmpty()) {
+            request.setAttribute("error", "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.");
+            request.getRequestDispatcher("/view/common/login.jsp").forward(request, response);
+            return;
+        }
+        
+        try {
+            // Tìm sinh viên theo username hoặc email
+            Students student = studentDAO.findStudentByEmailOrUsername(username);
+            
+            if (student != null) {
+                // Kiểm tra mật khẩu
+                if (BCrypt.checkpw(password, student.getPassword())) {
+                    // Đăng nhập thành công
+                    HttpSession session = request.getSession();
+                    session.setAttribute("student", student);
+                    session.setAttribute("userType", "student");
+                    
+                    // Điều hướng đến dashboard
+                    response.sendRedirect(request.getContextPath() + "/view/student/dashboard.jsp");
+                } else {
+                    request.setAttribute("error", "Mật khẩu không đúng.");
+                    request.getRequestDispatcher("/view/common/login.jsp").forward(request, response);
+                }
+            } else {
+                request.setAttribute("error", "Tên đăng nhập hoặc email không tồn tại.");
+                request.getRequestDispatcher("/view/common/login.jsp").forward(request, response);
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Lỗi khi đăng nhập: " + e.getMessage());
+            request.getRequestDispatcher("/view/common/login.jsp").forward(request, response);
+        }
     }
-
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

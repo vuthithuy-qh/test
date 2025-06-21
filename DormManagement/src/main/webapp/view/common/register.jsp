@@ -9,9 +9,190 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Đăng ký tài khoản</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .register-container {
+                background: white;
+                border-radius: 15px;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+                padding: 40px;
+                width: 100%;
+                max-width: 500px;
+            }
+            .form-control:focus {
+                border-color: #667eea;
+                box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            }
+            .btn-register {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border: none;
+                border-radius: 25px;
+                padding: 12px 30px;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+            .btn-register:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            }
+            .alert {
+                border-radius: 10px;
+                border: none;
+            }
+            .form-label {
+                font-weight: 600;
+                color: #333;
+            }
+            .login-link {
+                text-align: center;
+                margin-top: 20px;
+            }
+            .login-link a {
+                color: #667eea;
+                text-decoration: none;
+                font-weight: 600;
+            }
+            .login-link a:hover {
+                text-decoration: underline;
+            }
+        </style>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="register-container">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold text-primary">Đăng ký tài khoản</h2>
+                <p class="text-muted">Vui lòng điền đầy đủ thông tin bên dưới</p>
+            </div>
+
+            <% if (request.getAttribute("error") != null) { %>
+                <div class="alert alert-danger" role="alert">
+                    <%= request.getAttribute("error") %>
+                </div>
+            <% } %>
+
+            <% if (request.getAttribute("successMessage") != null) { %>
+                <div class="alert alert-success" role="alert">
+                    <%= request.getAttribute("successMessage") %>
+                </div>
+            <% } %>
+
+            <form action="${pageContext.request.contextPath}/RegistraServlet" method="POST" id="registerForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Tên đăng nhập *</label>
+                    <input type="text" class="form-control" id="username" name="username" 
+                           value="<%= request.getAttribute("username") != null ? request.getAttribute("username") : "" %>"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email *</label>
+                    <input type="email" class="form-control" id="email" name="email" 
+                           value="<%= request.getAttribute("email") != null ? request.getAttribute("email") : "" %>"
+                           placeholder="example@gmail.com hoặc student@fpt.edu.vn" required>
+                    <div class="form-text">Email phải có định dạng @gmail.com hoặc @fpt.edu.vn</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">Họ và tên *</label>
+                    <input type="text" class="form-control" id="fullName" name="fullName" 
+                           value="<%= request.getAttribute("fullName") != null ? request.getAttribute("fullName") : "" %>"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="studentCode" class="form-label">Mã sinh viên *</label>
+                    <input type="text" class="form-control" id="studentCode" name="studentCode" 
+                           value="<%= request.getAttribute("studentCode") != null ? request.getAttribute("studentCode") : "" %>"
+                           placeholder="VD: SE123456 hoặc 2024-SE001" required>
+                    <div class="form-text">Mã sinh viên phải có 6-12 ký tự (chữ cái, số hoặc dấu gạch ngang)</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cccd" class="form-label">CCCD *</label>
+                    <input type="text" class="form-control" id="cccd" name="cccd" 
+                           value="<%= request.getAttribute("cccd") != null ? request.getAttribute("cccd") : "" %>"
+                           placeholder="123456789012" required>
+                    <div class="form-text">CCCD phải có đúng 12 ký tự số</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật khẩu *</label>
+                    <input type="password" class="form-control" id="password" name="password" 
+                           minlength="8" required>
+                    <div class="form-text">Mật khẩu phải có ít nhất 8 ký tự</div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="confirmPassword" class="form-label">Xác nhận mật khẩu *</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" 
+                           minlength="8" required>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-register">Đăng ký</button>
+                </div>
+            </form>
+
+            <div class="login-link">
+                <p>Đã có tài khoản? <a href="${pageContext.request.contextPath}/view/common/login.jsp">Đăng nhập ngay</a></p>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // Validate form trước khi submit
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const email = document.getElementById('email').value;
+                const studentCode = document.getElementById('studentCode').value;
+                const cccd = document.getElementById('cccd').value;
+
+                // Kiểm tra password
+                if (password !== confirmPassword) {
+                    e.preventDefault();
+                    alert('Mật khẩu xác nhận không khớp!');
+                    return false;
+                }
+
+                // Kiểm tra email
+                if (!email.endsWith('@gmail.com') && !email.endsWith('@fpt.edu.vn')) {
+                    e.preventDefault();
+                    alert('Email phải có định dạng @gmail.com hoặc @fpt.edu.vn hợp lệ!');
+                    return false;
+                }
+
+                // Kiểm tra mã sinh viên
+                if (!/^[A-Za-z0-9-]{6,12}$/.test(studentCode)) {
+                    e.preventDefault();
+                    alert('Mã sinh viên phải có 6-12 ký tự (chữ cái, số hoặc dấu gạch ngang)!');
+                    return false;
+                }
+
+                // Kiểm tra CCCD
+                if (!/^\d{12}$/.test(cccd)) {
+                    e.preventDefault();
+                    alert('CCCD phải có đúng 12 ký tự số!');
+                    return false;
+                }
+            });
+
+            // Chỉ cho phép nhập chữ cái, số và dấu gạch ngang cho mã sinh viên
+            document.getElementById('studentCode').addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^A-Za-z0-9-]/g, '');
+            });
+
+            document.getElementById('cccd').addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+        </script>
     </body>
 </html>

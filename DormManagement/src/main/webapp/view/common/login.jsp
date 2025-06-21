@@ -18,7 +18,7 @@
         }
         .login-container h2 {
             margin-bottom: 20px;
-            color: #000000; /* Màu đen cho tiêu đề */
+            color: #ffffff; /* Màu trắng cho tiêu đề */
         }
         .login-container input {
             width: 100%;
@@ -56,7 +56,7 @@
 </head>
 <body>
     <div class="header">
-        <a href="${pageContext.request.contextPath}/register.jsp" class="nav-link">Đăng Ký</a>
+        <a href="${pageContext.request.contextPath}/RegistraServlet" class="nav-link">Đăng Ký</a>
         <a href="${pageContext.request.contextPath}/view/common/login.jsp" class="nav-link">Đăng Nhập</a>
     </div>
     <div class="login-container">
@@ -64,12 +64,12 @@
         <% if (request.getAttribute("error") != null) { %>
             <p class="error"><%= request.getAttribute("error") %></p>
         <% } %>
-        <form action="${pageContext.request.contextPath}/login" method="post">
+        <form action="${pageContext.request.contextPath}/StudentLoginServlet" method="post">
             <input type="text" name="username" placeholder="Tên đăng nhập" required>
             <input type="password" name="password" placeholder="Mật khẩu" required>
             <button type="submit">Đăng Nhập</button>
         </form>
-        <a href="${pageContext.request.contextPath}/register.jsp">Chưa có tài khoản? Đăng Ký</a>
+        <a href="${pageContext.request.contextPath}/RegistraServlet">Chưa có tài khoản? Đăng Ký</a>
     </div>
 </body>
 </html>

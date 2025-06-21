@@ -97,6 +97,8 @@ public class StudentDAO {
                     student.setPassword(rs.getString("Password"));
                     student.setEmail(rs.getString("Email"));
                     student.setFullName(rs.getString("FullName"));
+                    student.setStudentCode(rs.getString("StudentCode"));
+                    student.setCccd(rs.getString("CCCD"));
                     student.setDob(rs.getDate("Dob"));
                     student.setGender(rs.getString("Gender"));
                     student.setPhone(rs.getString("Phone"));
@@ -179,6 +181,8 @@ public class StudentDAO {
                     student.setPassword(rs.getString("Password"));
                     student.setEmail(rs.getString("Email"));
                     student.setFullName(rs.getString("FullName"));
+                    student.setStudentCode(rs.getString("StudentCode"));
+                    student.setCccd(rs.getString("CCCD"));
                     student.setDob(rs.getDate("Dob"));
                     student.setGender(rs.getString("Gender"));
                     student.setPhone(rs.getString("Phone"));
@@ -210,6 +214,8 @@ public class StudentDAO {
                 student.setPassword(rs.getString("Password"));
                 student.setEmail(rs.getString("Email"));
                 student.setFullName(rs.getString("FullName"));
+                student.setStudentCode(rs.getString("StudentCode"));
+                student.setCccd(rs.getString("CCCD"));
                 student.setDob(rs.getDate("Dob"));
                 student.setGender(rs.getString("Gender"));
                 student.setPhone(rs.getString("Phone"));
@@ -224,6 +230,47 @@ public class StudentDAO {
         } catch (SQLException e) {
             System.err.println("StudentDAO: Lỗi khi lấy danh sách sinh viên: " + e.getMessage());
             throw e;
+        }
+    }
+    
+    /**
+     * Kiểm tra xem username hoặc email đã tồn tại chưa
+     */
+    public boolean checkUserExists(String username, String email) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM Students WHERE Username = ? OR Email = ?";
+        try (Connection conn = dbContext.getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.setString(2, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
+            }
+        }
+    }
+    
+    /**
+     * Thêm sinh viên mới vào database
+     */
+    public boolean insertStudent(Students student) throws SQLException {
+        String sql = "INSERT INTO Students (Username, Password, Email, FullName, StudentCode, CCCD, Status_Room, CreatedAt, UpdatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = dbContext.getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            // Hash password trước khi lưu
+            String hashedPassword = BCrypt.hashpw(student.getPassword(), BCrypt.gensalt());
+            
+            stmt.setString(1, student.getUsername());
+            stmt.setString(2, hashedPassword);
+            stmt.setString(3, student.getEmail());
+            stmt.setString(4, student.getFullName());
+            stmt.setString(5, student.getStudentCode());
+            stmt.setString(6, student.getCccd());
+            stmt.setString(7, student.getStatusRoom());
+            stmt.setDate(8, student.getCreatedAt());
+            stmt.setDate(9, student.getUpdatedAt());
+            
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
         }
     }
 }

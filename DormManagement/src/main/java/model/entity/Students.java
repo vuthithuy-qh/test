@@ -8,6 +8,8 @@ public class Students {
     private String password;
     private String email;
     private String fullName;
+    private String studentCode;
+    private String cccd;
     private Date dob;
     private String gender;
     private String phone;
@@ -19,12 +21,14 @@ public class Students {
     public Students() {
     }
 
-    public Students(int studentId, String username, String password, String email, String fullName, Date dob, String gender, String phone, String address, String statusRoom, Date createdAt, Date updatedAt) {
+    public Students(int studentId, String username, String password, String email, String fullName, String studentCode, String cccd, Date dob, String gender, String phone, String address, String statusRoom, Date createdAt, Date updatedAt) {
         this.studentId = studentId;
         this.username = username;
         this.password = password;
         this.email = email;
         this.fullName = fullName;
+        this.studentCode = studentCode;
+        this.cccd = cccd;
         this.dob = dob;
         this.gender = gender;
         this.phone = phone;
@@ -72,6 +76,22 @@ public class Students {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getStudentCode() {
+        return studentCode;
+    }
+
+    public void setStudentCode(String studentCode) {
+        this.studentCode = studentCode;
+    }
+
+    public String getCccd() {
+        return cccd;
+    }
+
+    public void setCccd(String cccd) {
+        this.cccd = cccd;
     }
 
     public Date getDob() {
