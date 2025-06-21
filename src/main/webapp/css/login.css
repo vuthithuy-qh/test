@@ -1,0 +1,138 @@
+body, html{
+    margin: 0; 
+    padding: 0; 
+    height: 100%; 
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+    background-color: #f0f0f0; 
+}
+
+.login-page-container{
+    display: flex; 
+    min-height: 100vh;
+    width: 100%; 
+}
+
+.login-form-column{
+    flex: 0 0 480px;  /* Chiều rộng cố định cho cột form, không co giãn */ 
+    background-color: #ffffff; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 40px;
+    box-sizing: border-box; 
+    
+}
+
+.form-content{
+    width: 100%;
+    max-width: 380px; 
+}
+
+.form-header{
+    margin-bottom: 30px;
+    
+}
+
+.form-header .brand-id{
+    display: block; 
+    font-size: 0.85em; 
+    color: #888; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px;
+    margin-bottom: 8px; 
+        
+}
+
+.form-header h1{
+    font-size: 2.8em; 
+    color: #1a1a1a; 
+    margin-top: 0;
+    margin-bottom: 8px; 
+    font-weight: 600; 
+}
+
+.form-header .portal-info{
+    font-size: 1em; 
+    color: #555;
+    margin-bottom: 0; 
+}
+
+.error-message{
+    background-color: #ffebee; 
+    color: #c62828;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    border: 1px solid #ef9a9a; 
+}
+
+.form-group label{
+    display: block; 
+    font-size: 0.9em; 
+    color: #444;
+    margin-bottom: 8px; 
+    font-weight: 500; 
+    padding: 10px 0;
+}
+
+.form-group input[type="text"], 
+.form-group input[type="password"]{
+    width: 100%; 
+    height: 30px;
+    padding: 12px 0; 
+    border: none; 
+    border-bottom: 1px solid #ccc; 
+    font-size: 1em; 
+    color: #333;
+    background-color: transparent; 
+    box-sizing: border-box; 
+    transition: border-co 0.3s ease
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus{
+    outline: none;   
+}
+
+.form-actions{
+    margin-top: 30px; 
+}
+
+.btn{
+    display: block; 
+    width: 100%; 
+    padding: 14px; 
+    font-size: 1em; 
+    text-align: center; 
+    font-weight: bold; 
+    text-decoration: none; 
+    border-radius: 3px; 
+    cursor: pointer;
+    box-sizing: border-box; 
+    
+}
+
+.btn-primary{
+    background-color: #555; 
+    color: #ffffff; 
+    border: 1px solid #555; 
+    margin-bottom: 15px; 
+}
+
+.btn-primary:hover{
+    background-color: #333;
+    border-color: #333; 
+}
+
+.btn-secondary{
+    background-color: #f7f7f7; 
+    border-color: #333; 
+}
+
+.login-image-column{
+    flex-grow: 1; 
+    background-image: url('https://i.pinimg.com/736x/5a/a9/ab/5aa9ab36cda8523ba66a2f2a8d4196a5.jpg');
+    background-size: contain; 
+    background-position: center; 
+    
+}
