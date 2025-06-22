@@ -1,4 +1,4 @@
-package service;
+package model.service;
 
 import model.dao.StudentDAO;
 import model.entity.Students;

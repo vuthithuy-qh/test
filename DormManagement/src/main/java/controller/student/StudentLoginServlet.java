@@ -21,7 +21,6 @@ import org.mindrot.jbcrypt.BCrypt;
  *
  * @author HP
  */
-@WebServlet(name="StudentLoginServlet", urlPatterns={"/StudentLoginServlet"})
 public class StudentLoginServlet extends HttpServlet {
     private StudentDAO studentDAO;
     
@@ -63,7 +62,7 @@ public class StudentLoginServlet extends HttpServlet {
                     session.setAttribute("userType", "student");
                     
                     // Điều hướng đến dashboard
-                    response.sendRedirect(request.getContextPath() + "/view/student/dashboard.jsp");
+                    response.sendRedirect(request.getContextPath() + "/view/student/dashboardStudent.jsp");
                 } else {
                     request.setAttribute("error", "Mật khẩu không đúng.");
                     request.getRequestDispatcher("/view/common/login.jsp").forward(request, response);
