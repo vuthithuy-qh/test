@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
-import service.UserService;
+import model.service.UserService;
 import model.dao.StudentDAO;
 import model.entity.Students;
 
@@ -22,7 +22,6 @@ import model.entity.Students;
  *
  * @author DELL
  */
-@WebServlet(name="RegistraServlet", urlPatterns={"/RegistraServlet"})
 public class RegistraServlet extends HttpServlet {
     private UserService userService;
     private StudentDAO studentDAO;
