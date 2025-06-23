@@ -6,11 +6,11 @@ package service.account;
 
 import dao.account.AccountDAO;
 import dao.account.AccountDAOImpl;
-import dao.customerProfile.CustomerProfileDAO;
 import dao.customerProfile.CustomerProfileDAOImpl;
 import java.time.LocalDate;
 import model.Account;
 import model.CustomerProfile;
+import util.ValidateInforOfUser;
 
 /**
  *
@@ -18,7 +18,7 @@ import model.CustomerProfile;
  */
 public class AccountService {
     private AccountDAO accountDAO = new AccountDAOImpl(); 
-    private CustomerProfileDAO profileDAO = new CustomerProfileDAOImpl();
+    private CustomerProfileDAOImpl profileDAO = new CustomerProfileDAOImpl();
     public boolean registerNewUser(String username, String password, String email) throws Exception{
         if (accountDAO.findByUsername(username) != null){
             throw new Exception("Username has existed before!");
@@ -26,6 +26,15 @@ public class AccountService {
         
         if (accountDAO.findbyEmail(email) != null){
             throw new Exception("Email has existed before"); 
+        }
+        
+        if (!ValidateInforOfUser.validUsername(username)) {
+            throw new Exception("Username is not valid");
+        }
+
+        if (!ValidateInforOfUser.validPassword(password)) {
+
+            throw new Exception("Password contains 3 to 20 character");
         }
         
         Account account = new Account(); 

@@ -25,7 +25,9 @@
                 </div>
 
                 <div class="login-icon">
-                    <a href="customerProfile.jsp"><img src="https://i.pinimg.com/736x/32/36/cf/3236cf9b0c83ebed354164e61a978749.jpg" alt="My account"></a>
+                    <a href="${pageContext.request.contextPath}/customer-profile">
+                        <img src="https://i.pinimg.com/736x/32/36/cf/3236cf9b0c83ebed354164e61a978749.jpg" alt="My account">
+                    </a>
                     <p>HELLO ${sessionScope.currentUser.username}!</p>
                 </div>
             </div>

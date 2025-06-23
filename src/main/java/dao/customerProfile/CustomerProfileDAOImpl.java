@@ -14,9 +14,8 @@ import util.JPAUtil;
  *
  * @author ADMIN
  */
-public class CustomerProfileDAOImpl implements CustomerProfileDAO{
+public class CustomerProfileDAOImpl {
 
-    @Override
     public boolean save(CustomerProfile profile) {
         EntityManager em = null;
         try {
@@ -36,8 +35,13 @@ public class CustomerProfileDAOImpl implements CustomerProfileDAO{
         }
     }
 
-    @Override
-    public CustomerProfile findById(Long accountId) {
+    /**
+     *
+     * @param accountId
+     * @return
+     */
+ 
+    public CustomerProfile  findById(Long accountId) {
        EntityManager em = null;
         try {
             em = JPAUtil.getEntityManager();
@@ -50,7 +54,6 @@ public class CustomerProfileDAOImpl implements CustomerProfileDAO{
         }
     }
 
-    @Override
     public List<CustomerProfile> findAll() {
        EntityManager em = null;
         try {
@@ -66,7 +69,6 @@ public class CustomerProfileDAOImpl implements CustomerProfileDAO{
         }
     }
 
-    @Override
     public boolean update(CustomerProfile profile) {
         EntityManager em = null;
         try {
@@ -86,7 +88,6 @@ public class CustomerProfileDAOImpl implements CustomerProfileDAO{
         }
     }
 
-    @Override
     public boolean delete(Long accountId) {
         EntityManager em = null;
         try {
@@ -113,7 +114,6 @@ public class CustomerProfileDAOImpl implements CustomerProfileDAO{
         
     }
 
-    @Override
     public CustomerProfile findByPhone(String phone) {
        EntityManager em = null;
         try {
@@ -131,7 +131,6 @@ public class CustomerProfileDAOImpl implements CustomerProfileDAO{
         }
     }
 
-    @Override
     public List<CustomerProfile> findByName(String name) {
         EntityManager em = null;
         try {

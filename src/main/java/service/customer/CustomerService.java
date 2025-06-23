@@ -9,9 +9,13 @@ import dao.account.AccountDAOImpl;
 import dao.customerProfile.CustomerProfileDAO;
 import dao.customerProfile.CustomerProfileDAOImpl;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import model.Account;
 import model.CustomerProfile;
+import util.ValidateInforOfUser;
+import util.ValidationException;
 
 /**
  *
@@ -19,7 +23,7 @@ import model.CustomerProfile;
  */
 public class CustomerService {
     private AccountDAO accountDAO = new AccountDAOImpl(); 
-    private CustomerProfileDAO profileDAO = new CustomerProfileDAOImpl();
+    private CustomerProfileDAOImpl profileDAO = new CustomerProfileDAOImpl();
     
     public boolean register(String username, String password, String email, String name, String phone, String address){
         if (accountDAO.findByUsername(username) != null || accountDAO.findbyEmail(email) != null){
@@ -63,6 +67,8 @@ public class CustomerService {
         
     }
     
+    
+    
     public CustomerProfile login (String username, String password){
         Account account = accountDAO.findByUsername(username); 
         if (account == null){
@@ -85,7 +91,25 @@ public class CustomerService {
         return profileDAO.findById(accountId); 
     }
     
-    public boolean updateProfile(CustomerProfile profile){
+    public boolean updateProfile(CustomerProfile profile) throws ValidationException{
+        
+        Map<String, String> errors = new HashMap<>(); 
+        
+        if (!ValidateInforOfUser.isValidName(profile.getName())){
+            errors.put("nameError", "Name is not valid"); 
+        }
+        
+        if (!ValidateInforOfUser.isValidName(profile.getPhone())){
+            errors.put("phoneError", "Phone is not valid"); 
+        }
+        if (!ValidateInforOfUser.isValidShipAdd(profile.getShippingAddress())){
+            errors.put("shipAddError", "Address is not valid"); 
+        }
+        
+        if (!errors.isEmpty()){
+            throw new ValidationException("Data is not valid", errors); 
+        }
+        
         return profileDAO.update(profile); 
     }
     
