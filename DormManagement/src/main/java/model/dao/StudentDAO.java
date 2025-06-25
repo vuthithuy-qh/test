@@ -97,8 +97,6 @@ public class StudentDAO {
                     student.setPassword(rs.getString("Password"));
                     student.setEmail(rs.getString("Email"));
                     student.setFullName(rs.getString("FullName"));
-                    student.setStudentCode(rs.getString("StudentCode"));
-                    student.setCccd(rs.getString("CCCD"));
                     student.setDob(rs.getDate("Dob"));
                     student.setGender(rs.getString("Gender"));
                     student.setPhone(rs.getString("Phone"));
@@ -181,8 +179,6 @@ public class StudentDAO {
                     student.setPassword(rs.getString("Password"));
                     student.setEmail(rs.getString("Email"));
                     student.setFullName(rs.getString("FullName"));
-                    student.setStudentCode(rs.getString("StudentCode"));
-                    student.setCccd(rs.getString("CCCD"));
                     student.setDob(rs.getDate("Dob"));
                     student.setGender(rs.getString("Gender"));
                     student.setPhone(rs.getString("Phone"));
@@ -214,8 +210,6 @@ public class StudentDAO {
                 student.setPassword(rs.getString("Password"));
                 student.setEmail(rs.getString("Email"));
                 student.setFullName(rs.getString("FullName"));
-                student.setStudentCode(rs.getString("StudentCode"));
-                student.setCccd(rs.getString("CCCD"));
                 student.setDob(rs.getDate("Dob"));
                 student.setGender(rs.getString("Gender"));
                 student.setPhone(rs.getString("Phone"));
@@ -252,7 +246,7 @@ public class StudentDAO {
      * Thêm sinh viên mới vào database
      */
     public boolean insertStudent(Students student) throws SQLException {
-        String sql = "INSERT INTO Students (Username, Password, Email, FullName, StudentCode, CCCD, Status_Room, CreatedAt, UpdatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Students (Username, Password, Email, FullName, Dob, Gender, Phone, Address, Status_Room, CreatedAt, UpdatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = dbContext.getConnection(); 
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
@@ -263,11 +257,13 @@ public class StudentDAO {
             stmt.setString(2, hashedPassword);
             stmt.setString(3, student.getEmail());
             stmt.setString(4, student.getFullName());
-            stmt.setString(5, student.getStudentCode());
-            stmt.setString(6, student.getCccd());
-            stmt.setString(7, student.getStatusRoom());
-            stmt.setDate(8, student.getCreatedAt());
-            stmt.setDate(9, student.getUpdatedAt());
+            stmt.setDate(5, student.getDob());
+            stmt.setString(6, student.getGender());
+            stmt.setString(7, student.getPhone());
+            stmt.setString(8, student.getAddress());
+            stmt.setString(9, student.getStatusRoom());
+            stmt.setDate(10, student.getCreatedAt());
+            stmt.setDate(11, student.getUpdatedAt());
             
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;

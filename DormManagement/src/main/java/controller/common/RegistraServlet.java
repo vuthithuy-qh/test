@@ -56,26 +56,26 @@ public class RegistraServlet extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         String fullName = request.getParameter("fullName");
-        String studentCode = request.getParameter("studentCode");
         String cccd = request.getParameter("cccd");
+        String phone = request.getParameter("phone");
+        request.setAttribute("phone", phone);
 
         // Lưu giá trị tạm để giữ nguyên khi có lỗi
         request.setAttribute("role", role);
         request.setAttribute("username", username);
         request.setAttribute("email", email);
         request.setAttribute("fullName", fullName);
-        request.setAttribute("studentCode", studentCode);
         request.setAttribute("cccd", cccd);
 
-        // Validate dữ liệu đầu vào
+        // Validate dữ liệu đầu vào - chỉ validate các trường cơ bản
         if (username == null || username.trim().isEmpty() ||
             email == null || email.trim().isEmpty() ||
             password == null || password.trim().isEmpty() ||
             confirmPassword == null || confirmPassword.trim().isEmpty() ||
             fullName == null || fullName.trim().isEmpty() ||
-            studentCode == null || studentCode.trim().isEmpty() ||
-            cccd == null || cccd.trim().isEmpty()) {
-            request.setAttribute("error", "Vui lòng điền đầy đủ tất cả các trường thông tin.");
+            cccd == null || cccd.trim().isEmpty() ||
+            phone == null || phone.trim().isEmpty()) {
+            request.setAttribute("error", "Vui lòng điền đầy đủ tất cả các trường thông tin bắt buộc.");
             request.getRequestDispatcher("/view/common/register.jsp").forward(request, response);
             return;
         }
@@ -101,14 +101,6 @@ public class RegistraServlet extends HttpServlet {
             return;
         }
 
-        // Validate mã sinh viên
-        if (!userService.validateStudentCode(studentCode)) {
-            request.setAttribute("error", "Mã sinh viên phải có 6-12 ký tự (chữ cái, số hoặc dấu gạch ngang).");
-            request.setAttribute("studentCode", ""); // Reset mã sinh viên
-            request.getRequestDispatcher("/view/common/register.jsp").forward(request, response);
-            return;
-        }
-
         // Validate CCCD
         if (!userService.validateCCCD(cccd)) {
             request.setAttribute("error", "CCCD phải có đúng 12 ký tự số.");
@@ -117,9 +109,29 @@ public class RegistraServlet extends HttpServlet {
             return;
         }
 
+        // Validate số điện thoại
+        if (!phone.matches("^\\d{10,11}$")) {
+            request.setAttribute("error", "Số điện thoại phải có 10 hoặc 11 số!");
+            request.getRequestDispatcher("/view/common/register.jsp").forward(request, response);
+            return;
+        }
+
+        // Kiểm tra trùng số điện thoại
+        try {
+            if (studentDAO.isPhoneExists(phone)) {
+                request.setAttribute("error", "Số điện thoại đã tồn tại!");
+                request.getRequestDispatcher("/view/common/register.jsp").forward(request, response);
+                return;
+            }
+        } catch (SQLException e) {
+            request.setAttribute("error", "Lỗi kiểm tra số điện thoại: " + e.getMessage());
+            request.getRequestDispatcher("/view/common/register.jsp").forward(request, response);
+            return;
+        }
+
         try {
             // Thực hiện đăng ký
-            if (userService.registerUser(username, email, password, fullName, studentCode, cccd)) {
+            if (userService.registerUser(username, email, password, fullName, cccd, phone)) {
                 // Lấy thông tin sinh viên vừa đăng ký
                 Students student = studentDAO.findStudentByEmailOrUsername(username);
                 
@@ -131,7 +143,7 @@ public class RegistraServlet extends HttpServlet {
                     session.setAttribute("successMessage", "Đăng ký thành công! Chào mừng bạn đến với hệ thống.");
                     
                     // Điều hướng đến dashboard
-                    response.sendRedirect(request.getContextPath() + "/view/student/dashboard.jsp");
+                    response.sendRedirect(request.getContextPath() + "/view/student/dashboardStudent.jsp");
                 } else {
                     // Fallback: điều hướng về trang đăng nhập
                     HttpSession session = request.getSession();
@@ -139,7 +151,7 @@ public class RegistraServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/view/common/login.jsp");
                 }
             } else {
-                request.setAttribute("error", "Tên đăng nhập hoặc Email đã tồn tại.");
+                request.setAttribute("error", "Tên đăng nhập, Email hoặc Số điện thoại đã tồn tại.");
                 request.getRequestDispatcher("/view/common/register.jsp").forward(request, response);
             }
             

@@ -13,9 +13,9 @@ public class UserService {
         studentDAO = new StudentDAO();
     }
     
-    public boolean registerUser(String username, String email, String password, String fullName, String studentCode, String cccd) throws SQLException {
-        // Kiểm tra xem username hoặc email đã tồn tại chưa
-        if (studentDAO.checkUserExists(username, email)) {
+    public boolean registerUser(String username, String email, String password, String fullName, String cccd, String phone) throws SQLException {
+        // Kiểm tra xem username, email hoặc phone đã tồn tại chưa
+        if (studentDAO.checkUserExists(username, email) || studentDAO.isPhoneExists(phone)) {
             return false;
         }
         
@@ -25,8 +25,12 @@ public class UserService {
         student.setEmail(email);
         student.setPassword(password);
         student.setFullName(fullName);
-        student.setStudentCode(studentCode);
-        student.setCccd(cccd);
+        student.setPhone(phone);
+        
+        // Set các trường mặc định cho các trường không bắt buộc
+        student.setDob(java.sql.Date.valueOf("2000-01-01")); // Mặc định
+        student.setGender("Other"); // Mặc định
+        student.setAddress(""); // Để trống
         
         // Set ngày tạo
         Calendar cal = Calendar.getInstance();
@@ -34,7 +38,7 @@ public class UserService {
         student.setUpdatedAt(new Date(cal.getTimeInMillis()));
         
         // Set trạng thái mặc định
-        student.setStatusRoom("Chưa có phòng");
+        student.setStatusRoom("Active");
         
         // Lưu vào database
         return studentDAO.insertStudent(student);
@@ -49,14 +53,14 @@ public class UserService {
         // Kiểm tra email phải kết thúc bằng @gmail.com hoặc @fpt.edu.vn
         return email.endsWith("@gmail.com") || email.endsWith("@fpt.edu.vn");
     }
-    
-    public boolean validateStudentCode(String studentCode) {
-        // Kiểm tra mã sinh viên (có thể có cả chữ và số, độ dài 6-12 ký tự)
-        if (studentCode == null || studentCode.trim().isEmpty()) {
+    public boolean validatePhone(String phone) {
+        // Kiểm tra rỗng
+        if (phone == null || phone.trim().isEmpty()) {
             return false;
         }
-        // Chấp nhận chữ cái, số và dấu gạch ngang, độ dài 6-12 ký tự
-        return studentCode.matches("^[A-Za-z0-9-]{6,12}$");
+
+        // Regex kiểm tra số điện thoại Việt Nam (10 chữ số, bắt đầu bằng 03, 05, 07, 08, 09)
+        return phone.matches("^(03|05|07|08|09)\\d{8}$");
     }
     
     public boolean validateCCCD(String cccd) {
