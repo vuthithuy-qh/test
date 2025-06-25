@@ -85,6 +85,8 @@
             <% } %>
 
             <form action="${pageContext.request.contextPath}/RegistraServlet" method="POST" id="registerForm">
+                <input type="hidden" name="role" value="student">
+                
                 <div class="mb-3">
                     <label for="username" class="form-label">Tên đăng nhập *</label>
                     <input type="text" class="form-control" id="username" name="username" 
@@ -108,19 +110,19 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="studentCode" class="form-label">Mã sinh viên *</label>
-                    <input type="text" class="form-control" id="studentCode" name="studentCode" 
-                           value="<%= request.getAttribute("studentCode") != null ? request.getAttribute("studentCode") : "" %>"
-                           placeholder="VD: SE123456 hoặc 2024-SE001" required>
-                    <div class="form-text">Mã sinh viên phải có 6-12 ký tự (chữ cái, số hoặc dấu gạch ngang)</div>
-                </div>
-
-                <div class="mb-3">
                     <label for="cccd" class="form-label">CCCD *</label>
                     <input type="text" class="form-control" id="cccd" name="cccd" 
                            value="<%= request.getAttribute("cccd") != null ? request.getAttribute("cccd") : "" %>"
                            placeholder="123456789012" required>
                     <div class="form-text">CCCD phải có đúng 12 ký tự số</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Số điện thoại *</label>
+                    <input type="text" class="form-control" id="phone" name="phone"
+                           value="<%= request.getAttribute("phone") != null ? request.getAttribute("phone") : "" %>"
+                           placeholder="Nhập số điện thoại 10 hoặc 11 số" required maxlength="11">
+                    <div class="form-text">Số điện thoại phải có 10 hoặc 11 số và không trùng với tài khoản khác</div>
                 </div>
 
                 <div class="mb-3">
@@ -153,8 +155,8 @@
                 const password = document.getElementById('password').value;
                 const confirmPassword = document.getElementById('confirmPassword').value;
                 const email = document.getElementById('email').value;
-                const studentCode = document.getElementById('studentCode').value;
                 const cccd = document.getElementById('cccd').value;
+                const phone = document.getElementById('phone').value;
 
                 // Kiểm tra password
                 if (password !== confirmPassword) {
@@ -162,35 +164,35 @@
                     alert('Mật khẩu xác nhận không khớp!');
                     return false;
                 }
-
+                // Kiểm tra mật khẩu đủ mạnh
+                if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/.test(password)) {
+                    e.preventDefault();
+                    alert('Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ cái, số và ký tự đặc biệt!');
+                    return false;
+                }
                 // Kiểm tra email
                 if (!email.endsWith('@gmail.com') && !email.endsWith('@fpt.edu.vn')) {
                     e.preventDefault();
                     alert('Email phải có định dạng @gmail.com hoặc @fpt.edu.vn hợp lệ!');
                     return false;
                 }
-
-                // Kiểm tra mã sinh viên
-                if (!/^[A-Za-z0-9-]{6,12}$/.test(studentCode)) {
-                    e.preventDefault();
-                    alert('Mã sinh viên phải có 6-12 ký tự (chữ cái, số hoặc dấu gạch ngang)!');
-                    return false;
-                }
-
                 // Kiểm tra CCCD
                 if (!/^\d{12}$/.test(cccd)) {
                     e.preventDefault();
                     alert('CCCD phải có đúng 12 ký tự số!');
                     return false;
                 }
+                // Kiểm tra số điện thoại
+                if (!/^\d{10,11}$/.test(phone)) {
+                    e.preventDefault();
+                    alert('Số điện thoại phải có 10 hoặc 11 số!');
+                    return false;
+                }
             });
-
-            // Chỉ cho phép nhập chữ cái, số và dấu gạch ngang cho mã sinh viên
-            document.getElementById('studentCode').addEventListener('input', function(e) {
-                this.value = this.value.replace(/[^A-Za-z0-9-]/g, '');
-            });
-
             document.getElementById('cccd').addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+            document.getElementById('phone').addEventListener('input', function(e) {
                 this.value = this.value.replace(/[^0-9]/g, '');
             });
         </script>

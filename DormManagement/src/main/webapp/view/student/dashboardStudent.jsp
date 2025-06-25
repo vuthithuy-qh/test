@@ -95,7 +95,9 @@
             <div class="main-content">
                 <div class="welcome-section">
                     <h2><i class="fas fa-user-graduate me-2"></i>Chào mừng, ${sessionScope.student.fullName}!</h2>
-                    <p class="mb-0">Mã sinh viên: ${sessionScope.student.studentCode}</p>
+                    <p class="mb-0">Họ và tên: ${sessionScope.student.fullName}</p>
+                    <p class="mb-0">Email: ${sessionScope.student.email}</p>
+                    <p class="mb-0">Trạng thái: ${sessionScope.student.statusRoom}</p>
                 </div>
 
                 <!-- Stats -->
