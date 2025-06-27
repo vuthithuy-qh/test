@@ -25,6 +25,7 @@ public class StudentDAO {
         if (password == null || password.length() < 8
                 || !password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\\d).+$")) {
             throw new SQLException("Mật khẩu phải có ít nhất 8 ký tự, 1 chữ cái in hoa, 1 ký tự đặc biệt và 1 số.");
+            
         }
     }
 
