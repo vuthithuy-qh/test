@@ -39,7 +39,7 @@ public class StudentLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String username = request.getParameter("username");
+        String username = request.getParameter("emailOrUsername");
         String password = request.getParameter("password");
         
         if (username == null || username.trim().isEmpty() ||
