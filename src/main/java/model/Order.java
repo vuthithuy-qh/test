@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -69,6 +70,7 @@ public class Order implements Serializable{
     public void setId(int id) {
         this.id = id;
     }
+    
 
     public LocalDate getSaleDate() {
         return saleDate;
@@ -127,7 +129,10 @@ public class Order implements Serializable{
         this.status = status;
     }
     
-    
+    public String getSaleDateFormatted() {
+    if (saleDate == null) return "";
+    return saleDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+}
     
             
     

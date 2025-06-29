@@ -42,7 +42,7 @@ public class AccountDAOImpl implements AccountDAO{
     }
 
     @Override
-    public Account findById(Long id) {
+    public Account findById(int id) {
         EntityManager em = null; 
         try{
             em = JPAUtil.getEntityManager(); 
@@ -76,28 +76,27 @@ public class AccountDAOImpl implements AccountDAO{
     }
 
     @Override
-    public boolean update(Account account) {
-        EntityManager em = null;
-        try {
-            em = JPAUtil.getEntityManager(); 
-            em.getTransaction().begin();
-            em.merge(account); 
-            em.getTransaction().commit();
-            return true; 
-        } catch (Exception e) {
-            if (em != null && em.getTransaction().isActive()){
-                em.getTransaction().rollback();
-                
-            }
-            
-            e.printStackTrace();
-            return false; 
+public boolean update(Account account) {
+    EntityManager em = null;
+    try {
+        em = JPAUtil.getEntityManager(); 
+        em.getTransaction().begin();
+        em.merge(account); 
+        em.getTransaction().commit();
+        return true; 
+    } catch (Exception e) {
+        if (em != null && em.getTransaction().isActive()){
+            em.getTransaction().rollback();
         }
-        
-        
+        e.printStackTrace();
+        return false; 
+    } finally {
+        if (em != null && em.isOpen()) em.close(); // THÊM DÒNG NÀY
     }
+}
 
-    public boolean delete(Long id) {
+
+    public boolean delete(int id) {
         EntityManager em = null; 
         try {
             em = JPAUtil.getEntityManager();
@@ -123,42 +122,41 @@ public class AccountDAOImpl implements AccountDAO{
         }
     }
 
-    public Account findByUsername(String username) {
-     EntityManager em = null; 
-        try {
-            em = JPAUtil.getEntityManager(); 
-            String jpql = "SELECT a FROM Account a WHERE a.username = :username";
-            TypedQuery<Account> query = em.createQuery(jpql, Account.class); 
-            query.setParameter("username", username); 
-            List<Account> result = query.getResultList(); 
-            return result.isEmpty() ? null : result.get(0); 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null; 
-        }finally {
-            em.close();
-        }
-     
+public Account findByUsername(String username) {
+    EntityManager em = null; 
+    try {
+        em = JPAUtil.getEntityManager(); 
+        String jpql = "SELECT a FROM Account a WHERE a.username = :username";
+        TypedQuery<Account> query = em.createQuery(jpql, Account.class); 
+        query.setParameter("username", username); 
+        List<Account> result = query.getResultList(); 
+        return result.isEmpty() ? null : result.get(0); 
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null; 
+    } finally {
+        if (em != null && em.isOpen()) em.close();
     }
+}
 
-    public Account findbyEmail(String email) {
-        EntityManager em = null; 
-        try {
-            em = JPAUtil.getEntityManager(); 
-            String jpql = "SELECT a FROM Account a WHERE a.email = :email"; 
-            TypedQuery<Account> query = em.createQuery(jpql, Account.class); 
-            query.setParameter("email", email); 
-            List<Account> result = query.getResultList(); 
-            
-            return result.isEmpty() ? null : result.get(0); 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null; 
-        }finally {
-            em.close();
-        }
-        
+
+public Account findbyEmail(String email) {
+    EntityManager em = null; 
+    try {
+        em = JPAUtil.getEntityManager(); 
+        String jpql = "SELECT a FROM Account a WHERE a.email = :email"; 
+        TypedQuery<Account> query = em.createQuery(jpql, Account.class); 
+        query.setParameter("email", email); 
+        List<Account> result = query.getResultList(); 
+        return result.isEmpty() ? null : result.get(0); 
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null; 
+    } finally {
+        if (em != null && em.isOpen()) em.close();
     }
+}
+
     
     
     

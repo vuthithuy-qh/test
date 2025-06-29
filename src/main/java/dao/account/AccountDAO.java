@@ -15,11 +15,11 @@ public interface AccountDAO {
     
     boolean save(Account account); 
     
-    Account findById(Long id); 
+    Account findById(int id); 
     List<Account> findAll(); 
     
     boolean update(Account account); 
-    boolean delete(Long id); 
+    boolean delete(int id); 
     
     Account findByUsername(String username); 
     Account findbyEmail(String email); 

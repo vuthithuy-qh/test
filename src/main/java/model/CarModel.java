@@ -22,7 +22,7 @@ import jakarta.persistence.Table;
 public class CarModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
+    private int id; 
     
     private String name; 
     private Integer year; 
@@ -43,11 +43,11 @@ public class CarModel {
     @JoinColumn(name = "color_id")
     private  CarColor color; 
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -25,6 +25,7 @@
         <class>model.Maintenance</class>
         <class>model.MaintenanceItem</class>
         <class>model.MaintenanceDetail</class>
+        <class>model.Feedback</class>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=CarShop;encrypt=true;trustServerCertificate=true;"/>

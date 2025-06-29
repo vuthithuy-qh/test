@@ -17,6 +17,9 @@ public class CarSearchCriteriaDTO {
     private Integer year; 
     private BigDecimal minPrice; 
     private BigDecimal maxPrice; 
+    private Integer colorId; 
+    
+    private Integer engineTypeId; 
 
     public String getKeyword() {
         return keyword;
@@ -25,6 +28,24 @@ public class CarSearchCriteriaDTO {
     public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
+
+    public Integer getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(Integer colorId) {
+        this.colorId = colorId;
+    }
+
+    public Integer getEngineTypeId() {
+        return engineTypeId;
+    }
+
+    public void setEngineTypeId(Integer engineTypeId) {
+        this.engineTypeId = engineTypeId;
+    }
+    
+    
 
     public Integer getManufactureId() {
         return manufactureId;

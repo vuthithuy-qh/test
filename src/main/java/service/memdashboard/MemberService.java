@@ -43,7 +43,7 @@ public class MemberService {
         DashboardOverviewDTO dto = new DashboardOverviewDTO(); 
         
         //lay profile
-        CustomerProfile profile = customerService.viewProfile((long)accountId); 
+        CustomerProfile profile = customerService.viewProfile(accountId); 
         
         
         if (profile != null){
@@ -72,7 +72,7 @@ public class MemberService {
         return "New Member";
     }
     
-    public CustomerProfile getProfileForEdit(Long accountId){
+    public CustomerProfile getProfileForEdit(int accountId){
         return profileDAO.findById(accountId); 
     }
     

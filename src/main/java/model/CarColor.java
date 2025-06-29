@@ -22,7 +22,7 @@ import java.util.List;
 public class CarColor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
+    private int id; 
     
     @Column(name ="name", unique = true)
     private String name; 
@@ -45,11 +45,11 @@ public class CarColor {
         this.description = description;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

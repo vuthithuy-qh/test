@@ -6,7 +6,7 @@ package service.customer;
 
 import dao.account.AccountDAO;
 import dao.account.AccountDAOImpl;
-import dao.customerProfile.CustomerProfileDAO;
+//import dao.customerProfile.CustomerProfileDAO;
 import dao.customerProfile.CustomerProfileDAOImpl;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -87,7 +87,7 @@ public class CustomerService {
         return profile; 
     }
     
-    public CustomerProfile viewProfile(Long accountId){
+    public CustomerProfile viewProfile(int accountId){
         return profileDAO.findById(accountId); 
     }
     
@@ -99,7 +99,7 @@ public class CustomerService {
             errors.put("nameError", "Name is not valid"); 
         }
         
-        if (!ValidateInforOfUser.isValidName(profile.getPhone())){
+        if (!ValidateInforOfUser.isValidPhone(profile.getPhone())){
             errors.put("phoneError", "Phone is not valid"); 
         }
         if (!ValidateInforOfUser.isValidShipAdd(profile.getShippingAddress())){
@@ -113,11 +113,11 @@ public class CustomerService {
         return profileDAO.update(profile); 
     }
     
-    public boolean deleteProfile(Long accountId){
+    public boolean deleteProfile(int accountId){
         return profileDAO.delete(accountId); 
     }
     
-    public boolean changePassword(Long accountId, String newPassword){
+    public boolean changePassword(int accountId, String newPassword){
         Account account = accountDAO.findById(accountId); 
         if (account == null) return false; 
         account.setPasswordHash(newPassword);

@@ -66,7 +66,7 @@ public class AccountService {
         return account; 
     }
     
-    public boolean changePassword(Long accountId, String oldPassword, String newPassword) throws Exception{
+    public boolean changePassword(int accountId, String oldPassword, String newPassword) throws Exception{
         Account account = accountDAO.findById(accountId); 
         
         if (account == null){

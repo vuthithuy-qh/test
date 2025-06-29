@@ -8,7 +8,9 @@ import dto.CarSearchCriteriaDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import model.Car;
 import util.JPAUtil;
@@ -47,7 +49,7 @@ public class CarDAO {
         }
     }
     
-    public Optional<Car> findById(long  carId){
+    public Optional<Car> findById(int  carId){
         EntityManager em = JPAUtil.getEntityManager(); 
         try {
             return  Optional.ofNullable(em.find(Car.class, carId)); 
@@ -62,7 +64,7 @@ public class CarDAO {
      * @param carIds Danh sách các ID của xe.
      * @return Danh sách các đối tượng Car tương ứng.
      */
-    public List<Car> findCarsByIds(List<Long> carIds){
+    public List<Car> findCarsByIds(List<Integer> carIds){
         if (carIds == null || carIds.isEmpty()){
             return Collections.emptyList(); 
         }
@@ -158,8 +160,172 @@ public class CarDAO {
         }
     }
     
+    public List<Car> searchCars(CarSearchCriteriaDTO criteria, int page, int pageSize) {
+    EntityManager em = JPAUtil.getEntityManager();
+    try {
+        Map<String, Object> parameters = new HashMap<>();
+
+        StringBuilder jpql = new StringBuilder(
+            "SELECT c FROM Car c " +
+            "JOIN c.carModel m " +
+            "JOIN m.carType ct " +
+            "JOIN m.manufacture mf " +
+            "WHERE c.status = :status"
+        );
+        parameters.put("status", CarStatus.AVAILABLE);
+
+        // Lọc theo Manufacture
+        if (criteria.getManufactureId() != null) {
+            jpql.append(" AND mf.id = :manufactureId");
+            parameters.put("manufactureId", criteria.getManufactureId());
+        }
+
+        // Lọc theo CarType
+        if (criteria.getCarTypeId() != null) {
+            jpql.append(" AND ct.id = :carTypeId");
+            parameters.put("carTypeId", criteria.getCarTypeId());
+        }
+
+        // Lọc theo năm
+        if (criteria.getYear() != null) {
+            jpql.append(" AND m.year = :year");
+            parameters.put("year", criteria.getYear());
+        }
+
+        // Lọc theo giá bán (BigDecimal)
+        if (criteria.getMinPrice() != null) {
+            jpql.append(" AND c.sellingPrice >= :minPrice");
+            parameters.put("minPrice", criteria.getMinPrice());
+        }
+
+        if (criteria.getMaxPrice() != null) {
+            jpql.append(" AND c.sellingPrice <= :maxPrice");
+            parameters.put("maxPrice", criteria.getMaxPrice());
+        }
+
+        // Tìm kiếm keyword trên nhiều trường
+        if (criteria.getKeyword() != null && !criteria.getKeyword().trim().isEmpty()) {
+            String[] keywords = criteria.getKeyword().trim().split("[\\s,]+");
+            if (keywords.length > 0) {
+                jpql.append(" AND (");
+                for (int i = 0; i < keywords.length; i++) {
+                    if (i > 0) jpql.append(" OR ");
+                    String param = "keyword" + i;
+
+                    jpql.append("(LOWER(m.name) LIKE :").append(param)
+                        .append(" OR LOWER(ct.name) LIKE :").append(param)
+                        .append(" OR LOWER(mf.name) LIKE :").append(param).append(")");
+
+                    parameters.put(param, "%" + keywords[i].toLowerCase() + "%");
+                }
+                jpql.append(")");
+            }
+        }
+
+        jpql.append(" ORDER BY c.importDate DESC");
+
+        TypedQuery<Car> query = em.createQuery(jpql.toString(), Car.class);
+
+        // Gán tất cả tham số
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        // Phân trang
+        query.setFirstResult((page - 1) * pageSize);
+        query.setMaxResults(pageSize);
+
+        return query.getResultList();
+
+    } finally {
+        if (em != null) em.close();
+    }
+}
+
     
-    
+
+    public long countCarsByCriteria(CarSearchCriteriaDTO criteria) {
+    EntityManager em = JPAUtil.getEntityManager();
+    try {
+        Map<String, Object> parameters = new HashMap<>();
+
+        StringBuilder jpqlBuilder = new StringBuilder(
+            "SELECT COUNT(c) FROM Car c " +
+            "JOIN c.carModel m " +
+            "JOIN m.carType ct " +
+            "JOIN m.manufacture mf " +
+            "JOIN m.color cl " +
+            "JOIN m.engineType et " +
+            "WHERE c.status = :status"
+        );
+        parameters.put("status", CarStatus.AVAILABLE);
+
+        // --- Các điều kiện lọc ---
+        if (criteria.getManufactureId() != null) {
+            jpqlBuilder.append(" AND mf.id = :manufactureId");
+            parameters.put("manufactureId", criteria.getManufactureId());
+        }
+        if (criteria.getCarTypeId() != null) {
+            jpqlBuilder.append(" AND ct.id = :carTypeId");
+            parameters.put("carTypeId", criteria.getCarTypeId());
+        }
+        if (criteria.getColorId() != null) {
+            jpqlBuilder.append(" AND cl.id = :colorId");
+            parameters.put("colorId", criteria.getColorId());
+        }
+        if (criteria.getEngineTypeId() != null) {
+            jpqlBuilder.append(" AND et.id = :engineTypeId");
+            parameters.put("engineTypeId", criteria.getEngineTypeId());
+        }
+        if (criteria.getYear() != null) {
+            jpqlBuilder.append(" AND m.year = :year");
+            parameters.put("year", criteria.getYear());
+        }
+        if (criteria.getMinPrice() != null) {
+            jpqlBuilder.append(" AND c.sellingPrice >= :minPrice");
+            parameters.put("minPrice", criteria.getMinPrice());
+        }
+        if (criteria.getMaxPrice() != null) {
+            jpqlBuilder.append(" AND c.sellingPrice <= :maxPrice");
+            parameters.put("maxPrice", criteria.getMaxPrice());
+        }
+
+        // --- Tìm kiếm theo keyword trên nhiều trường ---
+        if (criteria.getKeyword() != null && !criteria.getKeyword().trim().isEmpty()) {
+            String[] keywords = criteria.getKeyword().trim().split("[\\s,]+");
+
+            if (keywords.length > 0) {
+                jpqlBuilder.append(" AND (");
+                for (int i = 0; i < keywords.length; i++) {
+                    if (i > 0) jpqlBuilder.append(" OR ");
+                    String param = "keyword" + i;
+
+                    jpqlBuilder.append("(LOWER(m.name) LIKE :").append(param)
+                        .append(" OR LOWER(ct.name) LIKE :").append(param)
+                        .append(" OR LOWER(mf.name) LIKE :").append(param)
+                        .append(" OR LOWER(cl.name) LIKE :").append(param)
+                        .append(" OR LOWER(et.name) LIKE :").append(param)
+                        .append(")");
+
+                    parameters.put(param, "%" + keywords[i].toLowerCase() + "%");
+                }
+                jpqlBuilder.append(")");
+            }
+        }
+
+        // --- Tạo query ---
+        TypedQuery<Long> query = em.createQuery(jpqlBuilder.toString(), Long.class);
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        return query.getSingleResult();
+    } finally {
+        if (em != null) em.close();
+    }
+}
+
+
     
     
 }

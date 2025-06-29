@@ -1,0 +1,116 @@
+/*html {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+    box-sizing: inherit;
+}*/
+body{
+    font-family: 'Poppin', sans-serif; 
+    margin: 0; 
+    background-color: #f8f9fa; 
+    color: #212529;
+}
+.main-header{
+    background-color: #ffffff; 
+    border-bottom: 1px solid #dee2e6; 
+    padding:  15px 0; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
+    width: 100%; 
+    margin-bottom: 20px; 
+       
+    
+}
+
+.header-content{
+    display: flex; 
+    align-items: center;  /*can giua theo chieu doc*/
+    justify-content: space-between; 
+    max-width: 1320px; 
+    margin: 0 auto; 
+}
+
+.logo{
+    margin: 0 0; 
+}
+
+.logo img{
+    width: auto; 
+    height: 50px; 
+    border-radius: 50%; 
+    object-fit: cover;
+    
+}
+
+.main-nav{
+    display: flex; 
+    align-items: center; 
+    gap: 25px; 
+    
+}
+
+.main-nav a{
+    text-decoration: none; 
+    color: #495057; 
+    font-weight: 600; 
+    padding: 8px 0; 
+    border-radius: 5px; 
+    position: relative; 
+    
+}
+
+.main-nav a::after{
+    content: '';  /* Tạo một phần tử giả (pseudo-element) rỗng */
+    position: absolute; 
+    width:0; /* Ban đầu không hiển thị */
+    height: 2px; /* Độ cao đường gạch chân */
+    bottom: 0;  /* Đặt sát cạnh dưới */
+    left: 0; /* Bắt đầu từ trái */
+    background-color: #000000; /* Màu đen cho đường gạch chân */
+    transition: width 0.3s;  /* Hiệu ứng mượt khi thay đổi chiều rộng */
+}
+
+.main-nav a:hover::after {
+    width: 100%;/* Khi hover, đường gạch chân mở rộng toàn bộ chiều ngang */
+}
+
+/*Hieu ung khi d chuot qua link*/
+.main-nav a:hover{
+    
+    color: #000000; /* Khi hover, đổi màu chữ thành đen */
+}
+
+.main-nav span{
+    color: #212529; 
+    font-weight: 600; 
+
+}
+
+.main-nav a.register-btn{
+    background-color: #212529; 
+    color: #ffffff; 
+    padding: 8px 16px; 
+    border-radius: 5px; 
+    transition: opacity 0.3s; 
+    
+}
+
+.main-nav a.register-btn:hover{
+    color: #ffffff; /* Giữ chữ màu trắng */
+    opacity: 0.85;
+}
+
+@media(max-width: 768px){
+    .header-content{
+        flex-direction: column;
+        gap: 15px; 
+    }
+    
+    .main-nav{
+        flex-wrap: wrap; /*cho phep cac muc nav xuong dong neu ko du cho*/
+        justify-content: center; /*Can giua cac muc nav*/
+        gap: 15px; 
+    }
+}

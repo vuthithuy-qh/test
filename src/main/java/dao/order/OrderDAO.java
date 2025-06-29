@@ -72,10 +72,13 @@ public class OrderDAO {
         
         try {
             String jpql = "SELECT o FROM Order o "
-                    + " LEFT JOIN FETCH o.oderDetails od "
-                    + "LEFT JOIN FETCH o.customer c "
-                    + "LEFT JOIN FETCH c.account "
-                    + "WHERE o.id = :orderId"; 
+                    + " LEFT JOIN FETCH o.customer cus " 
+                    + " LEFT JOIN FETCH cus.customerProfile cp "
+                    + " LEFT JOIN FETCH o.orderDetails od "
+                    + " LEFT JOIN FETCH o.billing b "
+                    + " LEFT JOIN FETCH od.car c "
+                    + " LEFT JOIN FETCH c.carModel cm "
+                    + " WHERE o.id = :orderId"; 
             TypedQuery<Order> query = em.createQuery(jpql, Order.class); 
             query.setParameter("orderId", orderId); 
             return Optional.of(query.getSingleResult()); 
@@ -95,11 +98,11 @@ public class OrderDAO {
      * @return Danh sách các đơn hàng trên trang hiện tại.
      */
     
-    public List<Order> findAllByAccountIdWithPafnination(int accountId, int page, int pageSize){
+    public List<Order> findAllByAccountIdWithPagnination(int accountId, int page, int pageSize){
         EntityManager em = JPAUtil.getEntityManager(); 
         
         try {
-            String jpql = "SELCT o from Order o WHERE o.customer.id = :accountId ORDER BY o.saleDate DESC"; 
+            String jpql = "SELECT o from Order o WHERE o.customer.id = :accountId ORDER BY o.saleDate DESC"; 
             TypedQuery<Order> query = em.createQuery(jpql, Order.class); 
             query.setParameter("accountId", accountId); 
             
@@ -123,7 +126,7 @@ public class OrderDAO {
         EntityManager em = JPAUtil.getEntityManager();
         
         try {
-            String jpql = "SELECT COUNT(o) FROM Order WHERE o.customer.id = :accoountId"; 
+            String jpql = "SELECT COUNT(o) FROM Order o WHERE o.customer.id = :accountId"; 
             TypedQuery<Long> query = em.createQuery(jpql, Long.class); 
             query.setParameter("accountId", accountId); 
             return query.getSingleResult(); 
@@ -133,20 +136,25 @@ public class OrderDAO {
     }
     
     public Order findLastestOrderByAccountId(int accountId){
-        EntityManager em = JPAUtil.getEntityManager(); 
-        
-        try {
-            // FETCH chi thi dac biet cua JPA, khi lay doi tuong Order, hay dong thoi lay luon collection orderDetails
-            //JPA sẽ tạo ra một câu SQL SELECT ... FROM [order] o LEFT JOIN order_detail od ON o.id = od.order_id ...
-            String jpql = "SELECT o FROM Order o LEFT JOIN FETCH o.orderDetails "
-                    + "WHERE o.customer.id = :accountId ORDER BY o.saleDate DESC"; 
-            TypedQuery<Order> query = em.createQuery(jpql,  Order.class); 
-            query.setParameter("accountId", accountId); 
-            query.setMaxResults(4); // chi lay 4 don hang gan nhat
-            List<Order> results = query.getResultList();
-            return results.isEmpty() ? null : results.get(0); 
-        } finally {
-        }
+    EntityManager em = JPAUtil.getEntityManager(); 
+    try {
+        // Bước 1: chỉ lấy ID của order mới nhất
+        String jpql = "SELECT o.id FROM Order o WHERE o.customer.id = :accountId ORDER BY o.saleDate DESC";
+        TypedQuery<Integer> idQuery = em.createQuery(jpql, Integer.class);
+        idQuery.setParameter("accountId", accountId);
+        idQuery.setMaxResults(1);
+
+        List<Integer> ids = idQuery.getResultList();
+        if (ids.isEmpty()) return null;
+
+        // Bước 2: dùng findById để lấy order đầy đủ thông tin (JOIN FETCH)
+        return findById(ids.get(0)).orElse(null);
+
+    } finally {
+        em.close();
+    }
+
+
     }
     
     // --- PHƯƠNG THỨC XÓA (DELETE) ---
@@ -157,7 +165,7 @@ public class OrderDAO {
      * @param orderId ID của đơn hàng cần xóa.
      */
     
-    public void deleteById(int orderId){
+    public void deleteById(Long orderId){
         EntityManager em = JPAUtil.getEntityManager(); 
         try{
             em.getTransaction().begin();

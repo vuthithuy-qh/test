@@ -1,40 +1,25 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <title>User</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/home.css" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css"/>
     </head>
     <body>
         <div class="container">
-            <div class="header">
-                <div class="logo">
-                    <img src="https://i.pinimg.com/736x/b9/d8/38/b9d838225bdb9dfdf924315456623479.jpg" 
-                         alt="Logo cong ty">
-                </div>
-
-                <div class="brand-option">
-                    <ul class="brand">
-                        <li class="br"><a href="index.html">LogOut</a></li>
-                        <li class="br"><a href="newcar.jsp">NewCar</a></li>
-                        <li class="br"><a href="oldCar.jsp">OldCar</a></li>
-                        <li class="br"><a href="sellCar.jsp">SellCar</a></li>
-                        <li class="br"><a href="contact.jsp">Contact</a></li>
-
-                    </ul>
-                </div>
-
-                <div class="login-icon">
-                    <a href="${pageContext.request.contextPath}/customer-profile">
-                        <img src="https://i.pinimg.com/736x/32/36/cf/3236cf9b0c83ebed354164e61a978749.jpg" alt="My account">
-                    </a>
-                    <p>HELLO ${sessionScope.currentUser.username}!</p>
-                </div>
-            </div>
+            
+                <jsp:include page="common/header.jsp"/>
+            
+                <form action="cars" method="get" class="home-search-form">
+                    <input type="text" name="keyword" placeholder="Find car"/>
+                    <button type="submit">Find car now</button>
+                </form>
 
             <section class="brower-by-type">
                 <div class="container2">
-                    <h2>Browser by Type</h2>
+                   
                     <div class="type-grid">
                         <div class="type-item">
                             <span class="type-icon"><img src="https://i.pinimg.com/736x/73/1b/3f/731b3f83f906493794819133a91f4f87.jpg"></span>
@@ -82,32 +67,7 @@
                 </div>
             </section>
 
-            <section class="cta-section">
-                <div class="container2 cta-container">
-                    <div class="cta-box looking-for-car">
-                        <h3>Are you looking for a Car?</h3>
-                        <p>We are committed to providing our customers with exceptional service.</p>
-                        <a href="shopping.jsp" class="btn btn-primary">Get Started <span class="arrow"> -></span></a>
-                        <div class="cta-icon">
-                            <img src="https://i.pinimg.com/736x/c7/69/db/c769db7c55c7387f9e2352154d20d656.jpg" 
-                                 alt="looking for car icon">  
-                        </div>
-                    </div>
-
-                    <div class="cta-box sell-a-car">
-                        <h3>Do you want to sell a car?</h3>
-                        <p>We are committed to providing our customers with exceptional service.</p>
-                        <a href="selling.jsp" class="btn btn-dark">Get Started <span class="arrow">-></span></a>
-                        <div class="cta-icon">
-                            <img src="https://i.pinimg.com/736x/c8/c6/9b/c8c69b4d9b112090a9d6e590c8b79c90.jpg" 
-                                 alt="sell a car icon"><!-- comment -->
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </section>
+           
 
 
 

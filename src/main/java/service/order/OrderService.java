@@ -40,7 +40,7 @@ public class OrderService {
         this.carDAO = new CarDAO();
     }
     
-    public Order createOrder (Account customer, List<Long> carIds) throws ValidationException{
+    public Order createOrder (Account customer, List<Integer> carIds) throws ValidationException{
         if (carIds == null || carIds.isEmpty()){
             throw new ValidationException("Your cart is empty", null); 
         }
@@ -118,7 +118,7 @@ public class OrderService {
         }
         
         //goi DAO de lay tong danh sach don hang cho trang hien tai
-        List<Order> ordersOnCurrentPage = orderDAO.findAllByAccountIdWithPafnination(accountId, page, pageSize);
+        List<Order> ordersOnCurrentPage = orderDAO.findAllByAccountIdWithPagnination(accountId, page, pageSize);
         //Goi dao de lay tong so don hang khach hang 
         long totalOrders = orderDAO.countOrdersByAccountId(accountId);
         //tinh toan tong so trang can co

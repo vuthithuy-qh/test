@@ -22,7 +22,7 @@ import java.util.List;
 public class Manufacture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
+    private int id; 
     
     @Column(name = "name")
     private String name; 
@@ -49,7 +49,7 @@ public class Manufacture {
     public Manufacture() {
     }
 
-    public Manufacture(Long id, String name, String country, String website, String contactEmail, String contactPhone, String address) {
+    public Manufacture(int id, String name, String country, String website, String contactEmail, String contactPhone, String address) {
         this.id = id;
         this.name = name;
         this.country = country;
@@ -59,11 +59,11 @@ public class Manufacture {
         this.address = address;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

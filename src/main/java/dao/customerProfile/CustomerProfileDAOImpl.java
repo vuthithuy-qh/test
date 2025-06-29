@@ -41,7 +41,7 @@ public class CustomerProfileDAOImpl {
      * @return
      */
  
-    public CustomerProfile  findById(Long accountId) {
+    public CustomerProfile  findById(int accountId) {
        EntityManager em = null;
         try {
             em = JPAUtil.getEntityManager();
@@ -88,7 +88,7 @@ public class CustomerProfileDAOImpl {
         }
     }
 
-    public boolean delete(Long accountId) {
+    public boolean delete(int accountId) {
         EntityManager em = null;
         try {
             em = JPAUtil.getEntityManager();

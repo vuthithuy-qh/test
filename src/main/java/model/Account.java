@@ -24,7 +24,7 @@ import java.time.LocalDate;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
+    private int id; 
     
     @Column(unique = true, nullable = false)
     private String username; 
@@ -53,11 +53,11 @@ public class Account {
     public Account() {
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -117,7 +117,7 @@ public class Account {
         this.deleteDate = deleteDate;
     }
 
-    public CustomerProfile getCustomerProfiel() {
+    public CustomerProfile getCustomerProfile() {
         return customerProfile;
     }
 

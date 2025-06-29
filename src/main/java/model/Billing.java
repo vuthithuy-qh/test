@@ -30,7 +30,7 @@ public class Billing implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
+    private int id; 
     
     @Column(name = "amount" , nullable = false, precision = 12, scale = 2)
     private BigDecimal amount; 
@@ -53,11 +53,11 @@ public class Billing implements Serializable{
     @JoinColumn(name = "order_id", nullable = false, unique = true)
     private Order order; 
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

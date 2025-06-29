@@ -22,7 +22,7 @@ import java.time.LocalDate;
 @Table(name = "customer_profile")
 public class CustomerProfile {
     @Id
-    private Long accountId; 
+    private int accountId; 
     
     private String name; 
     private String phone; 
@@ -42,11 +42,11 @@ public class CustomerProfile {
     public CustomerProfile() {
     }
 
-    public Long getAccountId() {
+    public int getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
 

@@ -73,7 +73,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
        String username = request.getParameter("username"); 
-       String password = request.getParameter("password"); 
+       String password = request.getParameter("password");
        
        if (username == null || password == null || username.isEmpty() || password.isEmpty()){
            request.setAttribute("errorMsg", "Please fill all");
@@ -97,9 +97,16 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("errorMsg", e.getMessage());
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-       
    }
     
+public Account checkLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Account acc = (Account) request.getSession().getAttribute("currentUser");
+    if (acc == null) {
+        response.sendRedirect("login.jsp");
+    }
+    return acc;
+}
+
     /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description

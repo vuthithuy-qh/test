@@ -243,4 +243,21 @@ cta-icon{
     height: 50px;
     object-fit: contain; 
 }
+.feedback-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white !important;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin: 10px 0;
+}
+
+.feedback-btn:hover {
+    background-color: #388e3c;
+}
+
 
