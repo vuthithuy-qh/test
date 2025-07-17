@@ -12,9 +12,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Profile Page</title>
+        <<link rel="stylesheet" href="${pageContext.request.contextPath}/css/profile_section.css"/>
+        
     </head>
     <body
-        <<h3>Infor of account</h3> 
+        <h3>Infor of account</h3> 
     <p>Manage information of account to security</p>
     <hr><!-- comment -->
     <c:if test="${not empty errors}">

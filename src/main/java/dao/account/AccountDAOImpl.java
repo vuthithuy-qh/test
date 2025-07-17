@@ -121,6 +121,42 @@ public boolean update(Account account) {
             if (em != null) em.close();
         }
     }
+    
+       public boolean isDuplicate(Account account) {
+    EntityManager em = JPAUtil.getEntityManager();
+    try {
+        String jpql = "SELECT COUNT(a) FROM Account a " +
+                      "WHERE (a.username = :username OR a.email = :email) " +
+                      "AND (a.deleteDate IS NULL)";
+        Long count = em.createQuery(jpql, Long.class)
+                       .setParameter("username", account.getUsername())
+                       .setParameter("email", account.getEmail())
+                       .getSingleResult();
+        return count > 0;
+    } finally {
+        em.close();
+    }
+}
+
+       public boolean isDuplicateExcludeId(Account account) {
+    EntityManager em = JPAUtil.getEntityManager();
+    try {
+        String jpql = "SELECT COUNT(a) FROM Account a " +
+                      "WHERE (a.username = :username OR a.email = :email) AND a.id <> :id";
+
+        Long count = em.createQuery(jpql, Long.class)
+                       .setParameter("username", account.getUsername())
+                       .setParameter("email", account.getEmail())
+                       .setParameter("id", account.getId())
+                       .getSingleResult();
+
+        return count > 0;
+    } finally {
+        em.close();
+    }
+}
+
+
 
 public Account findByUsername(String username) {
     EntityManager em = null; 

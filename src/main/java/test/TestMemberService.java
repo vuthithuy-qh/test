@@ -49,7 +49,7 @@ public class TestMemberService {
             e.printStackTrace();
         }
         
-        
+        //    <img src="${detail.car.imageUrl}" alt="${detail.car.carModel.name}" width="80" style="margin-right: 15px"/>
     }
     
 }

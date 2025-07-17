@@ -4,6 +4,8 @@
  */
 package model;
 
+import constant.PaymentStatus;
+import constant.PaymentMethod;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

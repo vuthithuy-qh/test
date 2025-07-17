@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Overview Page</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/overview_section.css"/>
     </head>
     <body>
         <h2>Ovewview Account</h2>
@@ -52,11 +53,11 @@
     <c:if test="${empty dashboardData}">
         <p>Không có dữ liệu tổng quan để hiển thị.</p>
     </c:if>
-    <h3>DEBUG OUTPUT</h3>
+<!--    <h3>DEBUG OUTPUT</h3>
     <pre>
 Recent Order: ${dashboardData.recentOrder}
 OrderDetails: ${dashboardData.recentOrder.orderDetails}
-    </pre>
+    </pre>-->
 
 
 

@@ -2,21 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Enum.java to edit this template
  */
-package dao.car;
-
-import org.hibernate.jpa.AvailableHints;
+package constant;
 
 /**
  *
  * @author ADMIN
  */
-public enum CarStatus {
-    AVAILABLE,
-    BOOKED,
-    RENTED,
-    SOLD, 
-    MAINTENANCE,
-    UNAVAILABLE
-    
-    
+public enum PaymentMethod {
+    CASH,
+    CREDIT_CARD,
+    BANK_TRANSFER, 
+    E_WALLET
 }

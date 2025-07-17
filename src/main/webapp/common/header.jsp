@@ -11,6 +11,9 @@
                 <c:choose>
                     <c:when test="${not empty sessionScope.currentUser}">
                         <span>Hello, ${sessionScope.currentUser.username}!</span>
+                        <a href="${pageContext.request.contextPath}/cart">
+                            Cart (<span>${empty sessionScope.cart ? 0 : fn:length(sessionScope.cart)}</span>
+                        </a>
                         <c:set var="requestURI" value="${pageContext.request.requestURI}"/>
 
                         <c:if test="${!fn:contains(requestURI, '/member')}">

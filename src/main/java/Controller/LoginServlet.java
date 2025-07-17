@@ -81,31 +81,49 @@ public class LoginServlet extends HttpServlet {
            return;
        }
        
-        try {
-            Account account = accountService.login(username, password); 
-            //dang nhap thanh cong luu thong tin vao session
-            HttpSession session = request.getSession(); 
-            // luu thong tin tai khoan người dùng vào session
-            session.setAttribute("currentUser", account); // currentUser is key, account is object containing infor of user
+     try {
+            // Gọi service để xác thực
+            Account account = accountService.login(username, password);
+
+            // Đặt đối tượng Account đầy đủ (được lấy từ DB) vào session
+            HttpSession session = request.getSession(); // Tạo session mới
+            session.setAttribute("currentUser", account);
             
-            //đảm bảo bất kì thông báo thành công nào (vd đăng kí tài khoản trước đó) còn sót lại 
-            // trong session sẽ bị xóa đi khi nguoi dung dang nhap thanh cong
+            // Xóa các thông báo cũ
             session.removeAttribute("successMsg");
-            response.sendRedirect("home.jsp");
-            
+            session.removeAttribute("errorMsg");
+
+            // --- PHẦN QUAN TRỌNG NHẤT: CHUYỂN HƯỚNG THEO VAI TRÒ (ROLE) ---
+            String userRole = account.getRole(); // Lấy tên của Enum
+
+            switch (userRole) {
+                case "admin":
+                    response.sendRedirect("dashboard.jsp"); // URL đến trang của admin
+                    break;
+                case "seller":
+                    response.sendRedirect("home.jsp"); // URL đến trang của seller
+                    break;
+                case "customer":
+                default:
+                    // Mặc định, customer và các role khác sẽ vào trang thành viên
+                    response.sendRedirect("home.jsp");
+                    break;
+            }
+
         } catch (Exception e) {
-            request.setAttribute("errorMsg", e.getMessage());
+            // Xử lý khi login thất bại (ví dụ: service ném ra exception)
+            request.setAttribute("errorMsg", "Tên đăng nhập hoặc mật khẩu không chính xác.");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-   }
-    
-public Account checkLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Account acc = (Account) request.getSession().getAttribute("currentUser");
-    if (acc == null) {
-        response.sendRedirect("login.jsp");
     }
-    return acc;
-}
+   
+    
+//public Account checkLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//    Account acc = (Account) request.getSession().getAttribute("currentUser");
+//    if (acc == null) {
+//        response.sendRedirect("login.jsp");
+//    }
+
 
     /** 
      * Returns a short description of the servlet.

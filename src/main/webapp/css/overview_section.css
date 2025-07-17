@@ -1,0 +1,62 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 40px;
+    color: #333;
+}
+
+/* Tiêu đề trang */
+h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+/* Tiêu đề phụ */
+h3, h4 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #111;
+}
+
+/* Nội dung chính */
+p {
+    font-size: 14px;
+    margin: 6px 0;
+    line-height: 1.5;
+}
+
+/* Nhấn mạnh thông tin quan trọng */
+strong {
+    color: #000;
+    font-weight: 600;
+}
+
+/* Hộp đơn hàng gần đây */
+.product-item {
+    padding: 8px 12px;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    margin: 6px 0;
+    color: #333;
+}
+
+/* Mục debug - để test */
+pre {
+    background-color: #fff;
+    padding: 16px;
+    font-size: 13px;
+    border: 1px solid #ddd;
+    margin-top: 30px;
+    color: #444;
+    border-radius: 6px;
+    white-space: pre-wrap;
+}
+
+/* Không có dữ liệu */
+.empty-message {
+    color: #999;
+    font-style: italic;
+}

@@ -13,7 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Car List</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css"/> 
-
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/car_listing.css"/>
         <%-- Nhúng font Poppins --%>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,7 +64,9 @@
                 <select name="colorId">
                     <option value="">-- All color --</option>
                     <c:forEach var="color" items="${filterData.colors}">
-                        <option value="${color.id}" ${searchCriteria.colorId == color.id ? 'selected' : ''}>
+                        <option value="${color.id}" 
+                                <c:if test="${searchCriteria.colorId == color.id}"> selected</c:if>>
+                                
                             ${color.name}
                         </option>
                     </c:forEach>
@@ -73,7 +75,8 @@
                 <select name="engineTypeId">
                     <option value="">--All Engine Type --</option>
                     <c:forEach var="engine" items="${filterData.engineTypes}">
-                        <option value="${engine.id}" ${searchCriteria.engineTypeId == engine.id ? 'selected' : ''}>
+                        <option value="${engine.id}"
+                               <c:if test="${searchCriteria.engineTypeId == engine.id}">selected</c:if>>
                             ${engine.name}
                         </option>
                     </c:forEach>
@@ -92,11 +95,25 @@
                 <div class="car-grid">
                     <c:forEach var="car" items="${pageData.cars}">
                         <div class="car-card">
+                            <c:if test="${not empty car.images}">
+                                <img src="${car.images[0].imageUrl}" alt="${car.carModel.name} Image" class="car-image"/>
+                            </c:if>
+                            <c:if test="${empty car.images}">
+                                <img src="${pageContext.request.contextPath}/images/default_car.png" alt="No image available" class="car-image default-image"/>
+                            </c:if>
                             <h3>${car.carModel.name}</h3>
                             <p>Price: ${car.sellingPrice}</p>
                             <p>Manufacture: ${car.carModel.manufacture.name}</p>
                             <p>Type: ${car.carModel.carType.name}</p>
                             <p>Year: ${car.carModel.year}</p>
+                            <p>Color: ${car.carModel.color.name}</p>
+                            <p>Engine Type: ${car.carModel.engineType.name}</p>
+                            <a href="${pageContext.request.contextPath}/addtocart?carId=${car.id} " class="add-to-cart-btn">
+                                Add to cart
+                            </a>
+                            <a href="${pageContext.request.contextPath}/car-detail?id=${car.id}" class="add-to-cart-btn">
+                                View Details
+                            </a>
                         </div>
                     </c:forEach>
                     
@@ -106,7 +123,7 @@
                     <c:if test="${pageData.totalPages > 1}">
                         <c:forEach var="i" begin="1" end="${pageData.totalPages}">
                             <%--Gui lai thong tin tim kiem qua url--%>
-                            <a href="cars ? keyword=${searchCriteria.keyword}
+                            <a href="cars?keyword=${searchCriteria.keyword}
                                &manufactureId=${searchCriteria.manufactureId}
                                &carTypeId = ${searchCriteria.carTypeId}
                                &year=${searchCriteria.year}

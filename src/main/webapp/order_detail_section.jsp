@@ -13,6 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Order detail Page</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/order_detail_section.css"/>
     </head>
     <body>
         <c:choose>
@@ -51,7 +52,7 @@
                             <tr>
                                 <td>
                                     <div style="display: flex; align-items: center;">
-                                        <img src="${detail.car.imageUrl}" alt="${detail.car.carModel.name}" width="80" style="margin-right: 15px"/>
+                                    
                                         <div>
                                             <strong>${detail.car.carModel.name}</strong>
                                             <span>VIN: ${detail.car.vin}</span>

@@ -4,7 +4,7 @@
  */
 package model;
 
-import dao.car.CarStatus;
+import constant.CarStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -55,6 +55,9 @@ public class Car {
     
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderDetail> orderDetails; 
+    
+    @OneToMany(mappedBy = "car" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CarImage> images; 
 
     public List<OrderDetail> getOrderDetails() {
         return orderDetails;
@@ -104,8 +107,14 @@ public class Car {
         this.status = status;
     }
 
+    public List<CarImage> getImages() {
+        return images;
+    }
 
-
+    public void setImages(List<CarImage> images) {
+        this.images = images;
+    }
+    
     public CarModel getCarModel() {
         return carModel;
     }

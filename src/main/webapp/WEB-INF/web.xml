@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <!-- SERVLETS -->
     <servlet>
         <servlet-name>PrintAll</servlet-name>
         <servlet-class>Controller.PrintAll</servlet-class>
@@ -16,6 +17,51 @@
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>Controller.RegisterServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <servlet-class>Controller.AddToCartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveFromCartServlet</servlet-name>
+        <servlet-class>Controller.RemoveFromCartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddFeedbackServlet</servlet-name>
+        <servlet-class>Controller.AddFeedbackServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CarDetailServlet</servlet-name>
+        <servlet-class>Controller.CarDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductManagement</servlet-name>
+        <servlet-class>Controller.ProductManagement</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateOrderServlet</servlet-name>
+        <servlet-class>Controller.CreateOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShoppingServlet</servlet-name>
+        <servlet-class>Controller.ShoppingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartViewServlet</servlet-name>
+        <servlet-class>Controller.CartViewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitBookingServlet</servlet-name>
+        <servlet-class>Controller.SubmitBookingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageBookingServlet</servlet-name>
+        <servlet-class>Controller.ManageBookingServlet</servlet-class>
+    </servlet>
+    <!-- SERVLET MAPPINGS -->
+    <servlet>
+        <servlet-name>AccountManagement</servlet-name>
+        <servlet-class>Controller.AccountManagement</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PrintAll</servlet-name>
         <url-pattern>/PrintAll</url-pattern>
@@ -31,6 +77,51 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <url-pattern>/AddToCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveFromCartServlet</servlet-name>
+        <url-pattern>/RemoveFromCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddFeedbackServlet</servlet-name>
+        <url-pattern>/AddFeedbackServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CarDetailServlet</servlet-name>
+        <url-pattern>/CarDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductManagement</servlet-name>
+        <url-pattern>/ProductManagement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateOrderServlet</servlet-name>
+        <url-pattern>/create-order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShoppingServlet</servlet-name>
+        <url-pattern>/shopping</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartViewServlet</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitBookingServlet</servlet-name>
+        <url-pattern>/submitbooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageBookingServlet</servlet-name>
+        <url-pattern>/managebooking</url-pattern>
+    </servlet-mapping>
+    <!-- SESSION CONFIG -->
+    <servlet-mapping>
+        <servlet-name>AccountManagement</servlet-name>
+        <url-pattern>/AccountManagement</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

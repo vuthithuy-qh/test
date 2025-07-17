@@ -5,7 +5,7 @@
 package service.order;
 
 import dao.car.CarDAO;
-import dao.car.CarStatus;
+import constant.CarStatus;
 import dao.order.OrderDAO;
 import dto.OrderHistoryPageDTO;
 import jakarta.persistence.EntityManager;
@@ -21,9 +21,9 @@ import model.Billing;
 import model.Car;
 import model.Order;
 import model.OrderDetail;
-import model.OrderStatus;
-import model.PaymentMethod;
-import model.PaymentStatus;
+import constant.OrderStatus;
+import constant.PaymentMethod;
+import constant.PaymentStatus;
 import util.JPAUtil;
 import util.ValidationException;
 

@@ -1,0 +1,135 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 40px;
+    color: #333;
+}
+
+/* Liên kết quay lại */
+a {
+    color: #0070c0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+/* Tiêu đề */
+h3 {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #000;
+}
+
+h4 {
+    font-size: 18px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: #111;
+}
+
+p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Trạng thái */
+.status {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+.status-PENDING {
+    background-color: #fff2cc;
+    color: #c47f00;
+}
+
+.status-COMPLETED {
+    background-color: #e6f7e9;
+    color: #2e7d32;
+}
+
+.status-CANCELLED {
+    background-color: #ffeaea;
+    color: #d32f2f;
+}
+
+.status-PROCCESSING {
+    background-color: #e0f7fa;
+    color: #007e9e;
+}
+
+/* Bảng sản phẩm */
+.order-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.order-details-table thead {
+    background-color: #f0f0f0;
+}
+
+.order-details-table th,
+.order-details-table td {
+    padding: 14px 16px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.order-details-table tbody tr:hover {
+    background-color: #fafafa;
+}
+
+.order-details-table tfoot td {
+    font-weight: bold;
+    background-color: #f9f9f9;
+}
+
+/* VIN hiển thị nhẹ hơn */
+.order-details-table span {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* Nút hủy đơn */
+.button-danger {
+    display: inline-block;
+    background-color: #bb0a30;
+    color: #fff;
+    padding: 10px 20px;
+    margin-top: 16px;
+    font-size: 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-danger:hover {
+    background-color: #a30028;
+    transform: scale(1.05);
+}
+
+/* Lỗi */
+.error-text {
+    color: #d32f2f;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
