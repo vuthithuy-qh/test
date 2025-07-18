@@ -1,3 +1,4 @@
+Controller\AccountManagement.class
 constant\CarStatus.class
 Controller\LoginServlet.class
 Controller\SubmitBookingServlet.class

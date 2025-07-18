@@ -1,116 +1,164 @@
-/*html {
-    box-sizing: border-box;
-}
-*, *::before, *::after {
-    box-sizing: inherit;
-}*/
-body{
-    font-family: 'Poppin', sans-serif; 
-    margin: 0; 
-    background-color: #f8f9fa; 
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #f8f9fa;
     color: #212529;
 }
-.main-header{
-    background-color: #ffffff; 
-    border-bottom: 1px solid #dee2e6; 
-    padding:  15px 0; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
-    position: sticky; 
-    top: 0; 
-    z-index: 1000; 
-    width: 100%; 
-    margin-bottom: 20px; 
-       
-    
+
+.main-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-.header-content{
-    display: flex; 
-    align-items: center;  /*can giua theo chieu doc*/
-    justify-content: space-between; 
-    max-width: 1320px; 
-    margin: 0 auto; 
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 20px;
+    flex-wrap: wrap;
 }
 
-.logo{
-    margin: 0 0; 
+/* LOGO */
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
 }
 
-.logo img{
-    width: auto; 
-    height: 50px; 
-    border-radius: 50%; 
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.header-logo-img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
     object-fit: cover;
-    
 }
 
-.main-nav{
-    display: flex; 
-    align-items: center; 
-    gap: 25px; 
-    
+/* SEARCH */
+.search-bar-header {
+    flex-grow: 1;
+    margin: 10px 20px;
+    max-width: 400px;
 }
 
-.main-nav a{
-    text-decoration: none; 
-    color: #495057; 
-    font-weight: 600; 
-    padding: 8px 0; 
-    border-radius: 5px; 
-    position: relative; 
-    
+.header-search-form {
+    display: flex;
+    background-color: #f0f0f0;
+    border-radius: 25px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
 }
 
-.main-nav a::after{
-    content: '';  /* Tạo một phần tử giả (pseudo-element) rỗng */
-    position: absolute; 
-    width:0; /* Ban đầu không hiển thị */
-    height: 2px; /* Độ cao đường gạch chân */
-    bottom: 0;  /* Đặt sát cạnh dưới */
-    left: 0; /* Bắt đầu từ trái */
-    background-color: #000000; /* Màu đen cho đường gạch chân */
-    transition: width 0.3s;  /* Hiệu ứng mượt khi thay đổi chiều rộng */
+.header-search-input {
+    flex-grow: 1;
+    border: none;
+    padding: 10px 18px;
+    font-size: 1em;
+    background-color: transparent;
+    color: #444;
+    outline: none;
+}
+
+.header-search-input::placeholder {
+    color: #999;
+}
+
+.header-search-button {
+    background-color: #cc0000;
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+}
+
+.header-search-button:hover {
+    background-color: #a00;
+}
+
+/* NAV */
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #495057;
+    font-weight: 600;
+    padding: 8px 0;
+    position: relative;
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    transition: width 0.3s;
 }
 
 .main-nav a:hover::after {
-    width: 100%;/* Khi hover, đường gạch chân mở rộng toàn bộ chiều ngang */
+    width: 100%;
 }
 
-/*Hieu ung khi d chuot qua link*/
-.main-nav a:hover{
-    
-    color: #000000; /* Khi hover, đổi màu chữ thành đen */
+.main-nav a:hover {
+    color: #000;
 }
 
-.main-nav span{
-    color: #212529; 
-    font-weight: 600; 
-
+.main-nav .register-btn {
+    background-color: #212529;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: opacity 0.3s ease;
 }
 
-.main-nav a.register-btn{
-    background-color: #212529; 
-    color: #ffffff; 
-    padding: 8px 16px; 
-    border-radius: 5px; 
-    transition: opacity 0.3s; 
-    
-}
-
-.main-nav a.register-btn:hover{
-    color: #ffffff; /* Giữ chữ màu trắng */
+.main-nav .register-btn:hover {
     opacity: 0.85;
 }
 
-@media(max-width: 768px){
-    .header-content{
+.main-nav span {
+    color: #212529;
+    font-weight: 600;
+}
+
+/* RESPONSIVE */
+@media(max-width: 768px) {
+    .header-content {
         flex-direction: column;
-        gap: 15px; 
+        align-items: center;
+        gap: 10px;
     }
-    
-    .main-nav{
-        flex-wrap: wrap; /*cho phep cac muc nav xuong dong neu ko du cho*/
-        justify-content: center; /*Can giua cac muc nav*/
-        gap: 15px; 
+    .main-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .search-bar-header {
+        max-width: 100%;
+        width: 100%;
     }
 }

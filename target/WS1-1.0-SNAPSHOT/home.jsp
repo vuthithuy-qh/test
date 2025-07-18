@@ -9,17 +9,13 @@
     </head>
     <body>
         <div class="container">
+            
+                <jsp:include page="common/header.jsp"/>
+            
 
-            <jsp:include page="common/header.jsp"/>
-
-            <form action="cars" method="get" class="home-search-form">
-                <input type="text" name="keyword" placeholder="Find car"/>
-                <button type="submit">Find car now</button>
-            </form>
-
-            <section class="brower-by-type">
+<!--            <section class="brower-by-type">
                 <div class="container2">
-
+                   
                     <div class="type-grid">
                         <div class="type-item">
                             <span class="type-icon"><img src="https://i.pinimg.com/736x/73/1b/3f/731b3f83f906493794819133a91f4f87.jpg"></span>
@@ -65,9 +61,9 @@
                     </div>
 
                 </div>
-            </section>
+            </section>-->
 
-
+           
 
 
 

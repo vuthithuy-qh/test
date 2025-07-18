@@ -1,0 +1,520 @@
+/*
+ * Document   : cart.css
+ * Description: Styles for the shopping cart page, matching the Audi-inspired luxury theme.
+ */
+
+/* Base styles, consistent with car_listing.css */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2; /* Light background */
+    color: #333;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Main container for the cart page */
+.cart-page-container {
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 0 30px;
+}
+
+/* Page title styling */
+.page-title {
+    text-align: center;
+    font-size: 3.2em;
+    color: #1a1a1a;
+    margin-bottom: 60px;
+    position: relative;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 700;
+}
+
+.page-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background-color: #cc0000; /* Audi red accent */
+    border-radius: 2px;
+}
+
+/* Alert messages (success/error) */
+.alert {
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+    opacity: 1; /* Default opacity for transition */
+}
+
+.alert i {
+    margin-right: 10px;
+}
+
+.alert-error {
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red text */
+    border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+    background-color: #d4edda; /* Light green */
+    color: #155724; /* Dark green text */
+    border: 1px solid #c3e6cb;
+}
+
+.alert .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: inherit; /* Inherit color from parent alert */
+    line-height: 1;
+    padding: 0 5px;
+}
+
+/* Empty Cart Section */
+.empty-cart {
+    text-align: center;
+    padding: 80px 20px;
+    color: #6c757d;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-top: 50px;
+}
+
+.empty-cart i {
+    font-size: 5rem; /* Larger icon */
+    margin-bottom: 30px;
+    color: #e0e0e0; /* Light gray icon */
+}
+
+.empty-cart h4 {
+    font-size: 1.8em;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.empty-cart p {
+    font-size: 1.1em;
+    margin-bottom: 30px;
+}
+
+/* Layout for cart items and summary */
+.cart-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Two-thirds for items, one-third for summary */
+    gap: 40px; /* Space between item list and summary */
+    align-items: start; /* Align items to the top */
+}
+
+/* Cart Items List */
+.cart-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Space between individual cart items */
+}
+
+/* Individual Cart Item */
+.cart-item {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Space between image, details, and actions */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.item-image-wrapper {
+    flex-shrink: 0; /* Prevent image from shrinking */
+    width: 180px; /* Fixed width for image container */
+    height: 130px; /* Fixed height */
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #f8f8f8; /* Placeholder background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.car-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px; /* Ensure image itself is rounded */
+}
+
+.default-image-placeholder {
+    font-size: 3rem;
+    color: #ccc;
+}
+
+.item-details {
+    flex-grow: 1; /* Allows details to take available space */
+}
+
+.item-title {
+    font-size: 1.8em;
+    color: #1a1a1a;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.item-meta {
+    font-size: 0.95em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.item-meta span {
+    margin-right: 15px;
+}
+
+.item-meta i {
+    color: #999; /* Softer icon color */
+    margin-right: 5px;
+}
+
+.item-price {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #cc0000; /* Audi red for price */
+    margin-top: 15px;
+}
+
+.item-actions {
+    flex-shrink: 0; /* Prevent actions from shrinking */
+    text-align: right;
+}
+
+.delete-btn {
+    background-color: #dc3545; /* Red for delete action */
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+/* Cart Summary Section */
+.cart-summary {
+    position: sticky; /* Keep summary box in view when scrolling */
+    top: 40px; /* Distance from top of viewport */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    padding: 30px;
+}
+
+.summary-box {
+    /* No specific styles needed here, parent .cart-summary handles it */
+}
+
+.summary-title {
+    font-size: 2em;
+    color: #1a1a1a;
+    margin-bottom: 30px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.summary-title i {
+    color: #cc0000; /* Audi red icon */
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.summary-row.total-amount-row {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.total-price {
+    color: #cc0000; /* Audi red for total price */
+    font-size: 1.6em; /* Larger total price */
+    font-weight: 700;
+}
+
+/* Action Buttons (Consult, Test Drive) */
+.form-action-btn {
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+}
+
+.primary-btn {
+    background-color: #1a1a1a; /* Dark button for luxury (main action) */
+    color: #fff;
+    border: 1px solid #1a1a1a;
+}
+
+.primary-btn:hover {
+    background-color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.secondary-btn {
+    background-color: #fff;
+    color: #1a1a1a;
+    border: 1px solid #bbb;
+}
+
+.secondary-btn:hover {
+    background-color: #f5f5f5;
+    border-color: #888;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.full-width-btn {
+    width: 100%;
+}
+
+/* Test Drive Section */
+.test-drive-section {
+    background-color: #f8f8f8; /* Light background for this section */
+    border-radius: 10px;
+    padding: 25px;
+    margin-top: 30px;
+    border: 1px solid #eee;
+}
+
+.test-drive-title {
+    font-size: 1.6em;
+    color: #1a1a1a;
+    margin-bottom: 25px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.test-drive-title i {
+    color: #cc0000; /* Audi red icon */
+}
+
+.test-drive-section .form-group {
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1em;
+    color: #444;
+    background-color: #fcfcfc;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.input-field:focus {
+    border-color: #cc0000;
+    box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.15);
+    outline: none;
+}
+
+.test-drive-section select.input-field {
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20512%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M251.4%20160h-246c-7.3%200-11.7%208.9-7.1%2014.1l123%20140c4.7%205.4%2013.4%205.4%2018.1%200l123-140c4.7-5.2.2-14.1-7.1-14.1z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 10px;
+    padding-right: 35px;
+}
+
+/* Footer styles (consistent with other pages) */
+.site-footer {
+    background-color: #1a1a1a; /* Dark background */
+    color: #fff;
+    padding: 25px 0;
+    margin-top: 80px; /* More space above footer */
+    font-size: 0.9em;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .cart-page-container {
+        padding: 0 20px;
+    }
+    .cart-layout {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        gap: 30px;
+    }
+    .cart-summary {
+        position: static; /* Remove sticky positioning on smaller screens */
+        margin-top: 30px; /* Add margin when not sticky */
+    }
+    .cart-item {
+        flex-direction: column; /* Stack image and details vertically */
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+    }
+    .item-image-wrapper {
+        width: 100%;
+        height: 180px;
+    }
+    .item-details {
+        width: 100%;
+    }
+    .item-actions {
+        width: 100%;
+        text-align: center;
+    }
+    .delete-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2.5em;
+        margin-bottom: 40px;
+    }
+    .cart-item {
+        flex-direction: column; /* Ensure vertical stacking */
+        padding: 15px;
+    }
+    .item-image-wrapper {
+        height: 150px;
+    }
+    .item-title {
+        font-size: 1.6em;
+    }
+    .item-price {
+        font-size: 1.3em;
+    }
+    .summary-title {
+        font-size: 1.8em;
+    }
+    .summary-row {
+        font-size: 1em;
+    }
+    .total-price {
+        font-size: 1.4em;
+    }
+    .btn {
+        padding: 10px 18px;
+        font-size: 0.95em;
+    }
+    .test-drive-title {
+        font-size: 1.4em;
+    }
+    .test-drive-section .form-group label {
+        font-size: 0.85em;
+    }
+    .input-field {
+        padding: 10px 12px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-page-container {
+        padding: 0 15px;
+    }
+    .page-title {
+        font-size: 2em;
+        letter-spacing: 2px;
+    }
+    .empty-cart {
+        padding: 40px 15px;
+    }
+    .empty-cart i {
+        font-size: 4rem;
+    }
+    .empty-cart h4 {
+        font-size: 1.5em;
+    }
+    .cart-item {
+        padding: 15px;
+    }
+    .item-image-wrapper {
+        height: 120px;
+    }
+    .item-title {
+        font-size: 1.4em;
+    }
+    .item-meta {
+        font-size: 0.85em;
+    }
+    .item-price {
+        font-size: 1.1em;
+    }
+    .delete-btn {
+        padding: 6px 12px;
+        font-size: 0.85em;
+    }
+    .summary-title {
+        font-size: 1.6em;
+    }
+    .total-price {
+        font-size: 1.2em;
+    }
+    .btn {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+    .test-drive-title {
+        font-size: 1.2em;
+    }
+    .test-drive-section .form-group label {
+        font-size: 0.8em;
+    }
+    .input-field {
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+}

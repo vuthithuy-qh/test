@@ -1,291 +1,487 @@
-body{
-    font-family: 'Poppins', sans-serif; 
-    margin: 0; 
-    padding: 0; 
-    background-color: #f0f0f0; 
+/*
+ * Document   : car_listing.css
+ * Description: Styles for the car listing page, aiming for an Audi-inspired luxury look.
+ */
+
+/* Base Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2; /* Lighter background for a cleaner, modern look */
     color: #333;
-    line-height: 1.6; 
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased; /* Smoother font rendering */
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.container{
-    max-width: 1200px; 
-    margin: 40px auto; 
-    padding: 0 20px; 
+/* Container for main content */
+.container {
+    max-width: 1300px; /* Slightly wider container for more expansive feel */
+    margin: 40px auto;
+    padding: 0 30px; /* Generous horizontal padding */
 }
 
-h1{
-    text-align: center; 
-    font-size: 2.8em; 
-    color: #222; 
-    margin-bottom: 50px; 
-    position: relative; 
-    padding-bottom: 10px; 
+/* Page Title Styles */
+.page-title {
+    text-align: center;
+    font-size: 3.2em; /* Larger, impactful title */
+    color: #1a1a1a; /* Dark, sophisticated title color */
+    margin-bottom: 60px; /* Ample space below the title */
+    position: relative;
+    padding-bottom: 15px; /* Space for the underline */
     text-transform: uppercase;
-    letter-spacing: 2px; 
+    letter-spacing: 3px; /* Wider letter spacing for elegance */
+    font-weight: 700; /* Bold and prominent */
 }
 
-h1::after{
-    content: ''; 
-    position: relative; 
-    left: 50%; 
-    bottom: 0; 
-    transform: translateX(-50%); 
-    width: 80px; 
-    height: 3px; 
-    background-color: #555; 
-    border-radius: 2px; 
+/* Underline effect for the title */
+.page-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100px; /* Distinctive, longer underline */
+    height: 4px; /* Thicker underline */
+    background-color: #cc0000; /* Audi red accent color */
+    border-radius: 2px;
 }
 
+/* Search Form Styles - Optimized for compactness and luxury */
 .search-form {
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax (200px, 1fr)); /*responsive grid for input*/
-    gap: 20px; 
-    background-color: #fff; 
-    padding: 30px; 
-    border-radius: 10px; 
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    margin-bottom: 50px; 
-    align-items: center; 
+    display: grid;
+    /* Responsive grid: 2-3 columns on larger screens, adjusting min width */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px 30px; /* Vertical gap between rows, horizontal gap between columns */
+    background-color: #ffffff;
+    padding: 35px 40px; /* Refined padding for a leaner look */
+    border-radius: 12px; /* Consistent rounded corners */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* Subtle, elegant shadow */
+    margin-bottom: 60px;
+    align-items: start; /* Align items to the top for a more compact layout */
 }
 
-.search-form input[type="text"], 
-.search-form input[type="number"], 
+/* Individual form group (label + input/select) */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0; /* Let grid gap handle spacing between form groups */
+}
+
+/* Labels for form inputs */
+.form-group label {
+    font-size: 0.9em;
+    color: #666; /* Softer color for labels */
+    margin-bottom: 8px;
+    font-weight: 500; /* Medium weight */
+}
+
+/* Styling for text inputs, number inputs, and select dropdowns */
+.search-form input[type="text"],
+.search-form input[type="number"],
 .search-form select {
-    width: 100%; 
-    padding: 12px 15px; 
-    border: 1px, solid #ddd; 
-    border-radius: 8px; 
-    font-size: 1em; 
-    color: #555; 
-    background-color: #fefefe; 
-    transition: all 0.3s ease; 
-    box-sizing: border-box; 
+    width: 100%;
+    padding: 12px 15px; /* Reduced padding for a more compact feel */
+    border: 1px solid #e0e0e0; /* Light, subtle border */
+    border-radius: 8px;
+    font-size: 1em;
+    color: #444;
+    background-color: #fcfcfc; /* Slightly off-white background */
+    transition: all 0.3s ease; /* Smooth transitions for interactions */
+    box-sizing: border-box; /* Include padding and border in element's total width/height */
+    -webkit-appearance: none; /* Remove default browser styling for selects */
+    -moz-appearance: none;
+    appearance: none;
 }
 
-.search-form input[type="text"] : focus,
-.search-form input[type="number"] : focus,
-.search-form select :focus {
-    border-color: #a00; 
-    box-shadow: 0 0 0 3px rgba(170, 0, 0, 0.1);
-    outline: none; 
+/* Focus state for form inputs */
+.search-form input[type="text"]:focus,
+.search-form input[type="number"]:focus,
+.search-form select:focus {
+    border-color: #cc0000; /* Audi red on focus */
+    box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.15); /* More visible, elegant shadow on focus */
+    outline: none; /* Remove default outline */
 }
 
-
+/* Custom arrow for select dropdowns */
 .search-form select {
-    appearance: none; /* Remove default arrow */
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20512%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M251.4%20160h-246c-7.3%200-11.7%208.9-7.1%2014.1l123%20140c4.7%205.4%2013.4%205.4%2018.1%200l123-140c4.7-5.2.2-14.1-7.1-14.1z%22%2F%3E%3C%2Fsvg%3E');
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20512%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M251.4%20160h-246c-7.3%200-11.7%208.9-7.1%2014.1l123%20140c4.7%205.4%2013.4%205.4%2018.1%200l123-140c4.7-5.2.2-14.1-7.1-14.1z%22%2F%3E%3C%2Fsvg%3E');
     background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 10px;
-    padding-right: 35px; /* Make space for the custom arrow */
+    background-position: right 15px center; /* Position arrow to the right */
+    background-size: 10px; /* Size of the custom arrow */
+    padding-right: 35px; /* Ensure space for the arrow */
 }
 
-.search-form button[type="submit"] {
-    background-color: #a00; /* Primary luxury color */
+/* Price Range group styling */
+.price-range {
+    display: flex;
+    flex-direction: row; /* Min and Max price inputs side-by-side */
+    align-items: center; /* Vertically align items */
+    grid-column: span 2; /* Spans two columns on larger screens */
+    gap: 15px; /* Space between min and max price inputs */
+    margin-top: 10px; /* Small top margin for the group */
+}
+
+/* Label for the price range group */
+.price-range label {
+    flex-basis: 100%; /* Allows label to take full width if needed */
+    margin-bottom: 0; /* No bottom margin for this label as inputs are next to it */
+}
+
+/* Inputs within the price range group */
+.price-range input {
+    flex: 1; /* Each input takes equal space within the flex container */
+    width: auto; /* Override default 100% width from parent */
+}
+.price-range input:first-child {
+    margin-right: 0; /* Remove old margin, gap handles spacing */
+}
+
+/* Search Button Styles */
+.search-button {
+    background-color: #cc0000; /* Prominent Audi red for the search button */
     color: #fff;
-    padding: 12px 25px;
+    padding: 14px 30px;
     border: none;
     border-radius: 8px;
-    font-size: 1.1em;
+    font-size: 1.15em;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    grid-column: span var(--button-span, auto); /* To make button span across columns if needed */
+    grid-column: span 2; /* Button spans two columns on larger screens */
+    justify-self: center; /* Centers the button horizontally */
+    width: fit-content; /* Adjusts width to content */
+    margin-top: 20px;
 }
 
-@media (max-width: 768px) {
-    .search-form {
-        grid-template-columns: 1fr; /* Stack inputs on smaller screens */
-    }
-    .search-form button[type="submit"] {
-        grid-column: span 1;
-    }
-}
-
-
-.search-form button[type="submit"]:hover {
-    background-color: #800; /* Darker shade on hover */
-    transform: translateY(-2px);
-}
-
-/* Horizontal Rule */
-hr {
-    border: none;
-    border-top: 1px solid #eee;
-    margin: 60px 0;
+/* Hover state for search button */
+.search-button:hover {
+    background-color: #a00; /* Darker red on hover */
+    transform: translateY(-2px); /* Slight lift effect */
 }
 
 /* Car Grid Styles */
 .car-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    padding-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Responsive grid for car cards */
+    gap: 40px; /* Increased gap between cards for visual separation */
+    padding-top: 30px;
 }
 
 /* Car Card Styles */
 .car-card {
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-    padding: 25px;
-    text-align: left;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07); /* Refined, subtle shadow */
+    overflow: hidden; /* Ensures content respects border-radius */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+    display: flex;
+    flex-direction: column; /* Stacks image and details vertically */
 }
 
-.car-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, #a00, #ff5e5e); /* Gradient line at top */
-    transform: translateX(-100%);
-    transition: transform 0.4s ease-out;
-}
-
-.car-card:hover::before {
-    transform: translateX(0);
-}
-
+/* Hover state for car cards */
 .car-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    transform: translateY(-8px); /* More noticeable lift on hover */
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
 }
 
+/* Image container within the car card */
+.car-image-container {
+    height: 220px; /* Fixed height for consistent image display */
+    overflow: hidden;
+    position: relative;
+}
+
+/* Car image styling */
 .car-image {
     width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers the container without distortion */
+    transition: transform 0.5s ease; /* Smooth zoom effect */
 }
+
+/* Zoom effect on image when car card is hovered */
+.car-card:hover .car-image {
+    transform: scale(1.05); /* Slight zoom in */
+}
+
+/* Car details section within the card */
+.car-details {
+    padding: 25px 30px; /* Generous padding inside card details */
+    flex-grow: 1; /* Allows details section to expand and fill space */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Car model name (h3) */
 .car-card h3 {
-    font-size: 1.8em;
+    font-size: 2em; /* Larger, prominent car model name */
     color: #1a1a1a;
     margin-top: 0;
     margin-bottom: 15px;
-    text-transform: capitalize;
+    font-weight: 600; /* Semi-bold */
 }
 
+/* Paragraph text within car card */
 .car-card p {
     font-size: 1.05em;
     color: #555;
     margin-bottom: 8px;
+    line-height: 1.4;
 }
 
+/* Strong text within car card paragraphs */
 .car-card p strong {
     color: #333;
-}
-
-.car-card .add-to-cart-btn {
-    display: inline-block;
-    background-color: #007bff; /* A standard call-to-action color, adjust if needed */
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    margin-top: 20px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.car-card .add-to-cart-btn:hover {
-    background-color: #0056b3;
-    transform: translateY(-1px);
+    font-weight: 500;
 }
 
 /* Price specific styling */
-.car-card p:nth-of-type(1) { /* Assuming 'Price' is the first <p> after <h3> */
-    font-size: 1.3em;
+.car-card .price {
+    font-size: 1.5em; /* Prominent price display */
     font-weight: 700;
-    color: #a00; /* Highlight price */
-    margin-bottom: 15px;
+    color: #cc0000; /* Audi red for price, making it stand out */
+    margin-bottom: 20px;
 }
 
+/* Action buttons container (Add to Cart, View Details) */
+.car-actions {
+    margin-top: auto; /* Pushes buttons to the bottom of the card */
+    display: flex;
+    gap: 15px; /* Space between buttons */
+    padding-top: 20px; /* Space above buttons */
+    border-top: 1px solid #eee; /* Subtle separator line */
+    justify-content: center; /* Centers buttons horizontally if they don't fill width */
+}
+
+/* Base button styling */
+.btn {
+    display: inline-block;
+    padding: 12px 22px; /* Adjusted padding for better button feel */
+    border-radius: 8px; /* Consistent rounded corners */
+    text-decoration: none;
+    font-weight: 600; /* Semi-bold text */
+    transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+    text-align: center;
+    flex: 1; /* Allows buttons to take equal width within the flex container */
+    white-space: nowrap; /* Prevents text wrapping inside buttons */
+}
+
+/* Primary button (Add to Cart) styling */
+.primary-btn {
+    background-color: #1a1a1a; /* Dark, luxurious background */
+    color: #fff; /* White text */
+    border: 1px solid #1a1a1a; /* Matching border */
+}
+
+/* Hover state for primary button */
+.primary-btn:hover {
+    background-color: #000; /* Even darker on hover */
+    transform: translateY(-2px); /* Slight lift */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Secondary button (View Details) styling */
+.secondary-btn {
+    background-color: #fff; /* White background */
+    color: #1a1a1a; /* Dark text */
+    border: 1px solid #bbb; /* Lighter border */
+}
+
+/* Hover state for secondary button */
+.secondary-btn:hover {
+    background-color: #f5f5f5; /* Slight background change */
+    border-color: #888; /* Darker border */
+    color: #000;
+    transform: translateY(-2px); /* Slight lift */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
 
 /* Pagination Styles */
 .pagination {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 60px; /* More space above pagination */
     padding-bottom: 40px;
 }
 
+/* Pagination link styling */
 .pagination a {
     display: inline-block;
-    padding: 10px 18px;
-    margin: 0 5px;
-    background-color: #fff;
-    border: 1px solid #ddd;
+    padding: 12px 20px; /* Larger padding for easier tapping */
+    margin: 0 6px; /* Increased margin between links */
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0; /* Light border */
     border-radius: 8px;
     color: #555;
     text-decoration: none;
     font-weight: 600;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
 }
 
+/* Hover state for pagination links */
 .pagination a:hover {
     background-color: #f0f0f0;
-    border-color: #a00;
-    color: #a00;
+    border-color: #cc0000; /* Audi red on hover */
+    color: #cc0000;
 }
 
+/* Active pagination link styling */
 .pagination a.active {
-    background-color: #a00; /* Active page gets luxury color */
+    background-color: #cc0000; /* Audi red for active page */
     color: #fff;
-    border-color: #a00;
+    border-color: #cc0000;
     pointer-events: none; /* Make active page not clickable */
+    box-shadow: 0 4px 10px rgba(204, 0, 0, 0.2); /* More prominent shadow for active */
 }
-
-/* Utility for spacing (optional, but good for consistency) */
-.mb-20 { margin-bottom: 20px; }
-.mt-30 { margin-top: 30px; }
 
 /* Responsive Adjustments */
-@media (max-width: 992px) {
-    h1 {
-        font-size: 2.2em;
+
+/* For screens up to 1024px (e.g., larger tablets, small laptops) */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 20px; /* Slightly less padding */
+    }
+    .page-title {
+        font-size: 2.8em;
+    }
+    .search-form {
+        /* Adjust min width for form columns */
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 15px 25px; /* Reduced gaps */
+        padding: 30px;
+    }
+    .price-range {
+        grid-column: span 1; /* Price range might only span 1 column */
+    }
+    .search-button {
+        grid-column: span 1; /* Search button might only span 1 column */
+        width: 100%; /* Make it full width */
+        margin-top: 15px;
     }
     .car-grid {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
+        gap: 30px;
     }
-    .car-card {
-        padding: 20px;
+    .car-image-container {
+        height: 200px;
+    }
+    .car-details {
+        padding: 20px 25px;
+    }
+    .car-card h3 {
+        font-size: 1.8em;
+    }
+    .car-card .price {
+        font-size: 1.3em;
     }
 }
 
-@media (max-width: 600px) {
-    .container {
-        margin: 20px auto;
-        padding: 0 15px;
+/* For screens up to 768px (e.g., tablets in portrait, large phones) */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2.2em;
+        margin-bottom: 40px;
     }
-    h1 {
-        font-size: 1.8em;
-        margin-bottom: 30px;
+    .search-form {
+        grid-template-columns: 1fr; /* Stack all inputs in a single column */
+        padding: 25px;
+        gap: 20px;
     }
+    .search-button {
+        grid-column: auto; /* Remove grid-column span */
+        justify-self: stretch; /* Stretch to full width */
+        width: auto; /* Auto width */
+    }
+    .price-range {
+        grid-column: auto; /* Remove grid-column span */
+        flex-direction: row; /* Keep min/max price side-by-side */
+        gap: 10px;
+    }
+    .price-range input {
+        width: calc(50% - 5px); /* Adjust width for two inputs */
+        margin-right: 0; /* Remove margin, use gap */
+    }
+    .car-grid {
+        grid-template-columns: 1fr; /* Single column for car cards */
+        gap: 25px;
+    }
+    .car-card {
+        flex-direction: row; /* Image and details side-by-side on tablets */
+        align-items: center;
+        text-align: left;
+    }
+    .car-image-container {
+        width: 40%; /* Image takes 40% width */
+        height: 150px; /* Fixed height for image */
+        flex-shrink: 0; /* Prevents image from shrinking */
+        border-radius: 8px 0 0 8px; /* Rounded corners only on left side */
+    }
+    .car-image {
+        border-radius: 8px 0 0 8px; /* Apply to image itself */
+    }
+    .car-details {
+        padding: 15px 20px;
+        width: 60%; /* Details take 60% width */
+    }
+    .car-card h3 {
+        font-size: 1.6em;
+        margin-bottom: 10px;
+    }
+    .car-card p {
+        font-size: 0.95em;
+        margin-bottom: 5px;
+    }
+    .car-card .price {
+        font-size: 1.2em;
+        margin-bottom: 15px;
+    }
+    .car-actions {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 10px;
+        padding-top: 15px;
+    }
+    .btn {
+        padding: 10px 15px;
+        font-size: 1em;
+    }
+    .pagination a {
+        padding: 10px 16px;
+        margin: 0 4px;
+    }
+}
+
+/* For screens up to 480px (e.g., most mobile phones) */
+@media (max-width: 480px) {
     .search-form {
         padding: 20px;
         gap: 15px;
     }
-    .search-form input, .search-form select, .search-form button {
-        padding: 10px;
-        font-size: 0.95em;
+    .price-range {
+        flex-direction: column; /* Stack min/max price vertically on very small screens */
     }
-    .car-grid {
-        grid-template-columns: 1fr; /* Single column on very small screens */
+    .price-range input {
+        width: 100%; /* Make inputs full width */
+        margin-right: 0;
+        margin-bottom: 10px; /* Add margin between stacked inputs */
     }
-    .car-card h3 {
-        font-size: 1.5em;
+    .price-range input:last-child {
+        margin-bottom: 0; /* No bottom margin for the last input */
     }
-    .car-card p {
-        font-size: 0.95em;
+    .car-card {
+        flex-direction: column; /* Stack vertically again on very small screens */
     }
-    .pagination a {
-        padding: 8px 14px;
+    .car-image-container {
+        width: 100%; /* Image takes full width */
+        height: 180px;
+        border-radius: 8px 8px 0 0; /* Rounded corners on top */
+    }
+    .car-image {
+        border-radius: 8px 8px 0 0;
+    }
+    .car-details {
+        width: 100%; /* Details take full width */
+        padding: 20px;
     }
 }

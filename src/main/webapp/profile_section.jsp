@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Profile Page</title>
-        <<link rel="stylesheet" href="${pageContext.request.contextPath}/css/profile_section.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/profile_section.css"/>
         
     </head>
     <body
@@ -44,7 +44,7 @@
                 </td>
             </tr>
             <tr>
-                <<td class="form-label">Phonenumber: </td>
+                <td class="form-label">Phonenumber: </td>
                 <td>
                     <input type="text" name="phone" value="${profile.phone}">
                     <c:if test="${not empty errors.phoneError}">
@@ -66,7 +66,7 @@
                 </td>
             </tr>
             <tr>
-                <<td class="form-label">BirthDate:</td>
+                <td class="form-label">BirthDate:</td>
                 <td>
                   
                     <input type="date" name="birthdate" value="${formattedBirthdate}" class="form-input">

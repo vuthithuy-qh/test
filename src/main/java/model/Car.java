@@ -56,7 +56,7 @@ public class Car {
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderDetail> orderDetails; 
     
-    @OneToMany(mappedBy = "car" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "car" , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CarImage> images; 
 
     public List<OrderDetail> getOrderDetails() {
